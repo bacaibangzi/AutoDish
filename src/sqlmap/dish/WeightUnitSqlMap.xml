@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dish.dao.WeightUnitMapper" >
+
+    <resultMap id="RM.WeightUnit" type="com.sc.dish.pojo.WeightUnit">
+        <result property="sn" column="SN"/>
+        <result property="unitId" column="UNIT_ID"/>
+        <result property="unitName" column="UNIT_NAME"/>
+        <result property="platNo" column="PLAT_NO"/>
+        <result property="platName" column="PLAT_NAME"/>
+        <result property="unitZhxs" column="UNIT_ZHXS"/>
+        <result property="orgCode" column="ORG_CODE"/>
+        <result property="p1" column="P1"/>
+        <result property="p2" column="P2"/>
+    </resultMap>
+
+	<sql id="WeightUnit.columns">
+	    <![CDATA[
+        SN ,UNIT_ID ,UNIT_NAME ,PLAT_NO ,UNIT_ZHXS ,ORG_CODE ,P1 ,P2 ,PLAT_Name
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        replace INTO weight_unit (
+        	SN ,
+        	UNIT_ID ,
+        	UNIT_NAME ,
+        	PLAT_NO ,
+        	PLAT_Name ,
+        	UNIT_ZHXS ,
+        	ORG_CODE ,
+        	P1 ,
+        	P2 
+        ) VALUES (
+			nextVal('weight_unit') ,
+			#{unitId} ,
+			#{unitName} ,
+			#{platNo} ,
+			#{platName} ,
+			#{unitZhxs} ,
+			#{orgCode} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="unitId" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE weight_unit SET
+	        UNIT_ID = #{unitId} ,
+	        UNIT_NAME = #{unitName} ,
+	        PLAT_NO = #{platNo} ,
+	        PLAT_Name = #{platName} ,
+	        UNIT_ZHXS = #{unitZhxs} ,
+	        ORG_CODE = #{orgCode} ,
+	        P1 = #{p1} ,
+	        P2 = #{p2} 
+        WHERE 
+	        SN = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM weight_unit WHERE
+        SN = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.WeightUnit">
+	    SELECT <include refid="WeightUnit.columns"/>
+	    <![CDATA[
+	        FROM weight_unit 
+	        WHERE 
+		        SN = #{sn} 
+	    ]]>
+    </select>
+
+	<sql id="WeightUnit.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND SN = #{sn}
+		       </if>
+		       <if test="unitId !=null">
+		            AND UNIT_ID = #{unitId}
+		       </if>
+		       <if test="unitName !=null">
+		            AND UNIT_NAME = #{unitName}
+		       </if>
+		       <if test="platNo !=null">
+		            AND PLAT_NO = #{platNo}
+		       </if>
+		       <if test="unitZhxs !=null">
+		            AND UNIT_ZHXS = #{unitZhxs}
+		       </if>
+		       <if test="orgCode !=null">
+		            AND ORG_CODE like concat('', #{orgCode}, '%')
+		       </if>
+		       <if test="p1 !=null">
+		            AND P1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND P2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM weight_unit <include refid="WeightUnit.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.WeightUnit">
+    	SELECT <include refid="WeightUnit.columns"/> FROM weight_unit 
+		<include refid="WeightUnit.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.WeightUnit">
+    	SELECT <include refid="WeightUnit.columns"/> FROM weight_unit 
+		<include refid="WeightUnit.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dish.dao.TbasPlatinfoMapper" >
+
+    <resultMap id="RM.TbasPlatinfo" type="com.sc.dish.pojo.TbasPlatinfo">
+        <result property="sn" column="SN"/>
+        <result property="platNo" column="PLAT_NO"/>
+        <result property="platName" column="PLAT_NAME"/>
+        <result property="bossname" column="BOSSNAME"/>
+        <result property="phone" column="PHONE"/>
+        <result property="location" column="LOCATION"/>
+        <result property="departCode" column="DEPART_CODE"/>
+        <result property="stationCode" column="STATION_CODE"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="orgCode" column="ORG_CODE"/>
+        <result property="p1" column="P1"/>
+        <result property="p2" column="P2"/>
+    </resultMap>
+
+	<sql id="TbasPlatinfo.columns">
+	    <![CDATA[
+        SN ,PLAT_NO ,PLAT_NAME ,BOSSNAME ,PHONE ,LOCATION ,DEPART_CODE ,STATION_CODE ,START_DATE ,ORG_CODE ,P1 ,P2 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO t_bas_platinfo (
+        	SN ,
+        	PLAT_NO ,
+        	PLAT_NAME ,
+        	BOSSNAME ,
+        	PHONE ,
+        	LOCATION ,
+        	DEPART_CODE ,
+        	STATION_CODE ,
+        	START_DATE ,
+        	ORG_CODE ,
+        	P1 ,
+        	P2 
+        ) VALUES (
+			nextVal('t_bas_platinfo') ,
+			#{platNo} ,
+			#{platName} ,
+			#{bossname} ,
+			#{phone} ,
+			#{location} ,
+			#{departCode} ,
+			#{stationCode} ,
+			#{startDate} ,
+			#{orgCode} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="platNo" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE t_bas_platinfo SET
+	        SN = #{sn} ,
+	        PLAT_NAME = #{platName} ,
+	        PLAT_NO = PLAT_NO ,
+	        BOSSNAME = #{bossname} ,
+	        PHONE = #{phone} ,
+	        LOCATION = #{location} ,
+	        DEPART_CODE = #{departCode} ,
+	        STATION_CODE = #{stationCode} ,
+	        START_DATE = #{startDate} ,
+	        ORG_CODE = #{orgCode} ,
+	        P1 = #{p1} ,
+	        P2 = #{p2} 
+        WHERE 
+	        SN = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM t_bas_platinfo WHERE
+         SN = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.TbasPlatinfo">
+	    SELECT <include refid="TbasPlatinfo.columns"/>
+	    <![CDATA[
+	        FROM t_bas_platinfo 
+	        WHERE 
+		        SN = #{sn} 
+	    ]]>
+    </select>
+    
+    
+    
+    <select id="getByNoOrgCode" resultMap="RM.TbasPlatinfo">
+	    SELECT <include refid="TbasPlatinfo.columns"/>
+	    <![CDATA[
+	        FROM t_bas_platinfo 
+	        WHERE 
+		        ORG_CODE = #{orgCode} 
+		        and PLAT_NO = #{platNo} 
+	    ]]>
+    </select>
+    
+
+	<sql id="TbasPlatinfo.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND SN = #{sn}
+		       </if>
+		       <if test="platNo !=null">
+		            AND PLAT_NO = #{platNo}
+		       </if>
+		       <if test="platName !=null">
+		            AND PLAT_NAME = #{platName}
+		       </if>
+		       <if test="bossname !=null">
+		            AND BOSSNAME = #{bossname}
+		       </if>
+		       <if test="phone !=null">
+		            AND PHONE = #{phone}
+		       </if>
+		       <if test="location !=null">
+		            AND LOCATION = #{location}
+		       </if>
+		       <if test="departCode !=null">
+		            AND DEPART_CODE = #{departCode}
+		       </if>
+		       <if test="stationCode !=null">
+		            AND STATION_CODE = #{stationCode}
+		       </if>
+		       <if test="startDateBegin !=null">
+		            AND START_DATE >= #startDateBegin#
+		       </if>
+		       <if test="startDateEnd !=null">
+		            AND START_DATE &lt;= #startDateEnd#
+		       </if>
+		       <if test="orgCode !=null">
+		            AND ORG_CODE like concat('', #{orgCode}, '%')
+		       </if>
+		       <if test="p1 !=null">
+		            AND P1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND P2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_bas_platinfo <include refid="TbasPlatinfo.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.TbasPlatinfo">
+    	SELECT <include refid="TbasPlatinfo.columns"/> FROM t_bas_platinfo 
+		<include refid="TbasPlatinfo.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.TbasPlatinfo">
+    	SELECT <include refid="TbasPlatinfo.columns"/> FROM t_bas_platinfo 
+		<include refid="TbasPlatinfo.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

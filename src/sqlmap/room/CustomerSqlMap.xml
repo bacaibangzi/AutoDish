@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.room.dao.CustomerDao" >
+
+    <resultMap id="RM.Customer" type="com.sc.room.pojo.Customer">
+        <result property="sn" column="sn"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="tel" column="tel"/>
+        <result property="sfz" column="sfz"/>
+        <result property="state" column="state"/>
+        <result property="date" column="date"/>
+        <result property="loudong" column="loudong"/>
+        <result property="louceng" column="louceng"/>
+        <result property="room" column="room"/>
+    </resultMap>
+
+	<sql id="Customer.columns">
+	    <![CDATA[
+        sn ,name ,sex ,tel ,sfz ,state ,date ,openid,loudong,louceng,room
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO customer (
+        	sn ,
+        	name ,
+        	sex ,
+        	tel ,
+        	sfz ,
+        	state ,
+        	date ,openid,loudong,louceng,room
+        ) VALUES (
+			nextVal('customer') ,
+			#{name} ,
+			#{sex} ,
+			#{tel} ,
+			#{sfz} ,
+			#{state} ,
+			now() ,
+			#{openid}  ,
+			'一栋','一层','114'
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="sn" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE customer SET
+	        name = #{name} ,
+	        sex = #{sex} ,
+	        tel = #{tel} ,
+	        sfz = #{sfz} ,
+	        state = #{state} ,
+	        date = #{date}  ,
+	        openid = #{openid} 
+        WHERE 
+	        sn = #{sn} 
+    ]]>
+    </update>
+    
+    
+    <update id="sh" >
+    <![CDATA[
+        UPDATE customer SET
+	        state = 1 
+        WHERE 
+	        sn = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM customer WHERE
+        sn = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.Customer">
+	    SELECT <include refid="Customer.columns"/>
+	    <![CDATA[
+	        FROM customer 
+	        WHERE 
+		        sn = #{sn} 
+	    ]]>
+    </select>
+    
+    
+    <select id="getByOpenid" resultMap="RM.Customer">
+	    SELECT <include refid="Customer.columns"/>
+	    <![CDATA[
+	        FROM customer 
+	        WHERE 
+		       openid = #{openid} 
+	    ]]>
+    </select>
+
+	<sql id="Customer.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND sn = #{sn}
+		       </if>
+		       <if test="name !=null">
+		            AND name = #{name}
+		       </if>
+		       <if test="sex !=null">
+		            AND sex = #{sex}
+		       </if>
+		       <if test="tel !=null">
+		            AND tel = #{tel}
+		       </if>
+		       <if test="sfz !=null">
+		            AND sfz = #{sfz}
+		       </if>
+		       <if test="state !=null">
+		            AND state = #{state}
+		       </if>
+		       <if test="dateBegin !=null">
+		            AND date >= #dateBegin#
+		       </if>
+		       <if test="dateEnd !=null">
+		            AND date &lt;= #dateEnd#
+		       </if>
+		       <if test="openid !=null">
+		            AND openid = #{openid}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM customer <include refid="Customer.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.Customer">
+    	SELECT <include refid="Customer.columns"/> FROM customer 
+		<include refid="Customer.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.Customer">
+    	SELECT <include refid="Customer.columns"/> FROM customer 
+		<include refid="Customer.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

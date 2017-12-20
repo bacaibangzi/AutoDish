@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dish.dao.FoodTypeMapper" >
+
+    <resultMap id="RM.FoodType" type="com.sc.dish.pojo.FoodType">
+        <result property="sn" column="SN"/>
+        <result property="typeId" column="TYPE_ID"/>
+        <result property="typeName" column="TYPE_NAME"/>
+        <result property="platNo" column="PLAT_NO"/>
+        <result property="platName" column="PLAT_NAME"/>
+        <result property="orgCode" column="ORG_CODE"/>
+        <result property="p1" column="P1"/>
+        <result property="p2" column="P2"/>
+    </resultMap>
+
+	<sql id="FoodType.columns">
+	    <![CDATA[
+        SN ,TYPE_ID ,TYPE_NAME ,PLAT_NO ,PLAT_Name ,ORG_CODE ,P1 ,P2 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        replace into food_type (
+        	SN ,
+        	TYPE_ID ,
+        	TYPE_NAME ,
+        	PLAT_NO ,
+        	PLAT_Name ,
+        	ORG_CODE ,
+        	P1 ,
+        	P2 
+        ) VALUES (
+			nextVal('food_type') ,
+			#{typeId} ,
+			#{typeName} ,
+			#{platNo} ,
+			#{platName} ,
+			#{orgCode} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="typeId" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE food_type SET
+	        SN = #{sn} ,
+	        TYPE_ID = #{typeId},
+	        TYPE_NAME = #{typeName} ,
+	        PLAT_NO = #{platNo} ,
+	        PLAT_Name = #{platName} ,
+	        ORG_CODE = #{orgCode} ,
+	        P1 = #{p1} ,
+	        P2 = #{p2} 
+        WHERE 
+	        SN = #{sn}
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM food_type WHERE
+        SN = #{sn}
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.FoodType">
+	    SELECT <include refid="FoodType.columns"/>
+	    <![CDATA[
+	        FROM food_type 
+	        WHERE 
+		        SN = #{sn}
+	    ]]>
+    </select>
+
+	<sql id="FoodType.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND SN = #{sn}
+		       </if>
+		       <if test="typeId !=null">
+		            AND TYPE_ID = #{typeId}
+		       </if>
+		       <if test="typeName !=null">
+		            AND TYPE_NAME = #{typeName}
+		       </if>
+		       <if test="platNo !=null">
+		            AND PLAT_NO = #{platNo}
+		       </if>
+		       <if test="orgCode !=null">
+		            AND ORG_CODE like concat('', #{orgCode}, '%')
+		       </if>
+		       <if test="p1 !=null">
+		            AND P1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND P2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM food_type <include refid="FoodType.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.FoodType">
+    	SELECT <include refid="FoodType.columns"/> FROM food_type 
+		<include refid="FoodType.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.FoodType">
+    	SELECT <include refid="FoodType.columns"/> FROM food_type 
+		<include refid="FoodType.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

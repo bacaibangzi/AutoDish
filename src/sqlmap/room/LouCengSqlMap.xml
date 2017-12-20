@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.room.dao.LouCengDao" >
+
+    <resultMap id="RM.LouCeng" type="com.sc.room.pojo.LouCeng">
+        <result property="sn" column="sn"/>
+        <result property="louDongSn" column="lou_dong_sn"/>
+        <result property="louDongCode" column="lou_dong_code"/>
+        <result property="louDongName" column="lou_dong_name"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+	<sql id="LouCeng.columns">
+	    <![CDATA[
+        sn ,lou_dong_sn ,lou_dong_code ,lou_dong_name ,code ,name ,remark 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO lou_ceng (
+        	sn ,
+        	lou_dong_sn ,
+        	lou_dong_code ,
+        	lou_dong_name ,
+        	code ,
+        	name ,
+        	remark 
+        ) VALUES (
+			nextVal('lou_ceng') ,
+			#{louDongSn} ,
+			#{louDongCode} ,
+			#{louDongName} ,
+			#{code} ,
+			#{name} ,
+			#{remark} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="sn" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE lou_ceng SET
+	        lou_dong_sn = #{louDongSn} ,
+	        lou_dong_code = #{louDongCode} ,
+	        lou_dong_name = #{louDongName} ,
+	        code = #{code} ,
+	        name = #{name} ,
+	        remark = #{remark} 
+        WHERE 
+	        sn = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM lou_ceng WHERE
+        sn = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.LouCeng">
+	    SELECT <include refid="LouCeng.columns"/>
+	    <![CDATA[
+	        FROM lou_ceng 
+	        WHERE 
+		        sn = #{sn} 
+	    ]]>
+    </select>
+
+	<sql id="LouCeng.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND sn = #{sn}
+		       </if>
+		       <if test="louDongSn !=null">
+		            AND lou_dong_sn = #{louDongSn}
+		       </if>
+		       <if test="louDongCode !=null">
+		            AND lou_dong_code = #{louDongCode}
+		       </if>
+		       <if test="louDongName !=null">
+		            AND lou_dong_name = #{louDongName}
+		       </if>
+		       <if test="code !=null">
+		            AND code = #{code}
+		       </if>
+		       <if test="name !=null">
+		            AND name = #{name}
+		       </if>
+		       <if test="remark !=null">
+		            AND remark = #{remark}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM lou_ceng <include refid="LouCeng.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.LouCeng">
+    	SELECT <include refid="LouCeng.columns"/> FROM lou_ceng 
+		<include refid="LouCeng.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.LouCeng">
+    	SELECT <include refid="LouCeng.columns"/> FROM lou_ceng 
+		<include refid="LouCeng.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

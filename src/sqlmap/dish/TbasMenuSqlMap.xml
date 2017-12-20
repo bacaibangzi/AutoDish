@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dish.dao.TbasMenuMapper" >
+
+    <resultMap id="RM.TbasMenu" type="com.sc.dish.pojo.TbasMenu">
+        <result property="sn" column="SN"/>
+        <result property="platNo" column="PLAT_NO"/>
+        <result property="platName" column="PLAT_NAME"/>
+        <result property="foodNo" column="FOOD_NO"/>
+        <result property="foodName" column="FOOD_NAME"/>
+        <result property="foodType" column="FOOD_TYPE"/>
+        <result property="weightUnit" column="WEIGHT_UNIT"/>
+        <result property="priceUnit" column="PRICE_UNIT"/>
+        <result property="startWeight" column="START_WEIGHT"/>
+        <result property="useFlag" column="USE_FLAG"/>
+        <result property="startDate" column="START_DATE"/>
+        <result property="operator" column="OPERATOR"/>
+        <result property="operateTime" column="OPERATE_TIME"/>
+        <result property="orgCode" column="ORG_CODE"/>
+        <result property="p1" column="P1"/>
+        <result property="p2" column="P2"/>
+    </resultMap>
+
+	<sql id="TbasMenu.columns">
+	    <![CDATA[
+        SN ,PLAT_NO ,FOOD_NO ,FOOD_NAME ,FOOD_TYPE ,WEIGHT_UNIT ,PRICE_UNIT ,START_WEIGHT ,USE_FLAG ,START_DATE ,OPERATOR ,OPERATE_TIME ,ORG_CODE ,P1 ,P2 ,PLAT_Name
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        replace INTO t_bas_menu (
+        	SN ,
+        	PLAT_NO ,
+        	PLAT_Name ,
+        	FOOD_NO ,
+        	FOOD_NAME ,
+        	FOOD_TYPE ,
+        	WEIGHT_UNIT ,
+        	PRICE_UNIT ,
+        	START_WEIGHT ,
+        	USE_FLAG ,
+        	START_DATE ,
+        	OPERATOR ,
+        	OPERATE_TIME ,
+        	ORG_CODE ,
+        	P1 ,
+        	P2 
+        ) VALUES (
+			nextVal('t_bas_menu') ,
+			#{platNo} ,
+			#{platName} ,
+			#{foodNo} ,
+			#{foodName} ,
+			#{foodType} ,
+			#{weightUnit} ,
+			#{priceUnit} ,
+			#{startWeight} ,
+			#{useFlag} ,
+			#{startDate} ,
+			#{operator} ,
+			#{operateTime} ,
+			#{orgCode} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="platNo" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE t_bas_menu SET
+	        FOOD_NO = #{foodNo} ,
+	        PLAT_NO = #{platNo} ,
+	        PLAT_Name = #{platName} ,
+	        FOOD_NAME = #{foodName} ,
+	        FOOD_TYPE = #{foodType} ,
+	        WEIGHT_UNIT = #{weightUnit} ,
+	        PRICE_UNIT = #{priceUnit} ,
+	        START_WEIGHT = #{startWeight} ,
+	        USE_FLAG = #{useFlag} ,
+	        START_DATE = #{startDate} ,
+	        OPERATOR = #{operator} ,
+	        OPERATE_TIME = #{operateTime} ,
+	        ORG_CODE = #{orgCode} ,
+	        P1 = #{p1} ,
+	        P2 = #{p2} 
+        WHERE 
+	        SN = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM t_bas_menu WHERE
+        SN = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.TbasMenu">
+	    SELECT <include refid="TbasMenu.columns"/>
+	    <![CDATA[
+	        FROM t_bas_menu 
+	        WHERE 
+		       SN = #{sn} 
+	    ]]>
+    </select>
+
+	<sql id="TbasMenu.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND SN = #{sn}
+		       </if>
+		       <if test="platNo !=null">
+		            AND PLAT_NO = #{platNo}
+		       </if>
+		       <if test="foodNo !=null">
+		            AND FOOD_NO = #{foodNo}
+		       </if>
+		       <if test="foodName !=null">
+		            AND FOOD_NAME = #{foodName}
+		       </if>
+		       <if test="foodType !=null">
+		            AND FOOD_TYPE = #{foodType}
+		       </if>
+		       <if test="weightUnit !=null">
+		            AND WEIGHT_UNIT = #{weightUnit}
+		       </if>
+		       <if test="priceUnit !=null">
+		            AND PRICE_UNIT = #{priceUnit}
+		       </if>
+		       <if test="startWeight !=null">
+		            AND START_WEIGHT = #{startWeight}
+		       </if>
+		       <if test="useFlag !=null">
+		            AND USE_FLAG = #{useFlag}
+		       </if>
+		       <if test="startDateBegin !=null">
+		            AND START_DATE >= #startDateBegin#
+		       </if>
+		       <if test="startDateEnd !=null">
+		            AND START_DATE &lt;= #startDateEnd#
+		       </if>
+		       <if test="operator !=null">
+		            AND OPERATOR = #{operator}
+		       </if>
+		       <if test="operateTimeBegin !=null">
+		            AND OPERATE_TIME >= #operateTimeBegin#
+		       </if>
+		       <if test="operateTimeEnd !=null">
+		            AND OPERATE_TIME &lt;= #operateTimeEnd#
+		       </if>
+		       <if test="orgCode !=null">
+		            AND ORG_CODE like concat('', #{orgCode}, '%')
+		       </if>
+		       <if test="p1 !=null">
+		            AND P1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND P2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM t_bas_menu <include refid="TbasMenu.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.TbasMenu">
+    	SELECT <include refid="TbasMenu.columns"/> FROM t_bas_menu 
+		<include refid="TbasMenu.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.TbasMenu">
+    	SELECT <include refid="TbasMenu.columns"/> FROM t_bas_menu 
+		<include refid="TbasMenu.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+
