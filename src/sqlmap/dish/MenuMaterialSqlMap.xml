@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dao.system.MenuMaterialMapper" >
+
+    <resultMap id="RM.MenuMaterial" type="com.sc.pojo.MenuMaterial">
+        <result property="sn" column="sn"/>
+        <result property="dishSn" column="dish_sn"/>
+        <result property="materialSn" column="material_sn"/>
+        <result property="num" column="num"/>
+        <result property="p1" column="p1"/>
+        <result property="p2" column="p2"/>
+    </resultMap>
+
+	<sql id="MenuMaterial.columns">
+	    <![CDATA[
+        sn ,dish_sn ,material_sn ,num ,p1 ,p2 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO menu_material (
+        	sn ,
+        	dish_sn ,
+        	material_sn ,
+        	num ,
+        	p1 ,
+        	p2 
+        ) VALUES (
+			nextVal('menu_material') ,
+			#{dishSn} ,
+			#{materialSn} ,
+			#{num} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE menu_material SET
+	        sn = #{sn} ,
+	        dish_sn = #{dishSn} ,
+	        material_sn = #{materialSn} ,
+	        num = #{num} ,
+	        p1 = #{p1} ,
+	        p2 = #{p2} 
+        WHERE 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM menu_material WHERE
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.MenuMaterial">
+	    SELECT <include refid="MenuMaterial.columns"/>
+	    <![CDATA[
+	        FROM menu_material 
+	        WHERE 
+	    ]]>
+    </select>
+
+	<sql id="MenuMaterial.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND sn = #{sn}
+		       </if>
+		       <if test="dishSn !=null">
+		            AND dish_sn = #{dishSn}
+		       </if>
+		       <if test="materialSn !=null">
+		            AND material_sn = #{materialSn}
+		       </if>
+		       <if test="num !=null">
+		            AND num = #{num}
+		       </if>
+		       <if test="p1 !=null">
+		            AND p1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND p2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM menu_material <include refid="MenuMaterial.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.MenuMaterial">
+    	SELECT <include refid="MenuMaterial.columns"/> FROM menu_material 
+		<include refid="MenuMaterial.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.MenuMaterial">
+    	SELECT <include refid="MenuMaterial.columns"/> FROM menu_material 
+		<include refid="MenuMaterial.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

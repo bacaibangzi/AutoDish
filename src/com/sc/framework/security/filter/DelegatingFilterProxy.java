@@ -101,6 +101,8 @@ public class DelegatingFilterProxy extends
 		OrgInfo  orgInfo  = null;
 		//System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 		// rest接口统一过滤用户，密码，门店编码
+		
+		/*
 		if(((HttpServletRequest)request).getServletPath().indexOf("-rest")!=-1){
 			try {
 				UserInfoService userInfoService = (UserInfoService)ContextUtil.getContext().getBean("userInfoService");
@@ -198,7 +200,7 @@ public class DelegatingFilterProxy extends
 				//e.printStackTrace();
 			}
 			
-		}
+		}*/
 		
 		if (!isCreack) {
 			if (shouldNotFilter(httpRequest)) {

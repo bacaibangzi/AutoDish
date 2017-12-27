@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dao.system.CookMapper" >
+
+    <resultMap id="RM.Cook" type="com.sc.pojo.Cook">
+        <result property="sn" column="sn"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="birthday" column="birthday"/>
+        <result property="phone" column="phone"/>
+        <result property="remark" column="remark"/>
+        <result property="orgCode" column="org_code"/>
+        <result property="p1" column="p1"/>
+        <result property="p2" column="p2"/>
+    </resultMap>
+
+	<sql id="Cook.columns">
+	    <![CDATA[
+        sn ,name ,sex ,birthday ,phone ,remark ,org_code ,p1 ,p2 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO cook (
+        	sn ,
+        	name ,
+        	sex ,
+        	birthday ,
+        	phone ,
+        	remark ,
+        	org_code ,
+        	p1 ,
+        	p2 
+        ) VALUES (
+			nextVal('cook') ,
+			#{name} ,
+			#{sex} ,
+			#{birthday} ,
+			#{phone} ,
+			#{remark} ,
+			#{orgCode} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="sn" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE cook SET
+	        name = #{name} ,
+	        sex = #{sex} ,
+	        birthday = #{birthday} ,
+	        phone = #{phone} ,
+	        remark = #{remark} ,
+	        org_code = #{orgCode} ,
+	        p1 = #{p1} ,
+	        p2 = #{p2} 
+        WHERE 
+	        sn = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM cook WHERE
+        sn = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.Cook">
+	    SELECT <include refid="Cook.columns"/>
+	    <![CDATA[
+	        FROM cook 
+	        WHERE 
+		        sn = #{sn} 
+	    ]]>
+    </select>
+
+	<sql id="Cook.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND sn = #{sn}
+		       </if>
+		       <if test="name !=null">
+		            AND name = #{name}
+		       </if>
+		       <if test="sex !=null">
+		            AND sex = #{sex}
+		       </if>
+		       <if test="birthdayBegin !=null">
+		            AND birthday >= #birthdayBegin#
+		       </if>
+		       <if test="birthdayEnd !=null">
+		            AND birthday &lt;= #birthdayEnd#
+		       </if>
+		       <if test="phone !=null">
+		            AND phone = #{phone}
+		       </if>
+		       <if test="remark !=null">
+		            AND remark = #{remark}
+		       </if>
+		       <if test="orgCode !=null">
+		            AND org_code = #{orgCode}
+		       </if>
+		       <if test="p1 !=null">
+		            AND p1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND p2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM cook <include refid="Cook.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.Cook">
+    	SELECT <include refid="Cook.columns"/> FROM cook 
+		<include refid="Cook.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.Cook">
+    	SELECT <include refid="Cook.columns"/> FROM cook 
+		<include refid="Cook.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+

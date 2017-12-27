@@ -1,5 +1,7 @@
 package com.sc.dish.rest;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +34,12 @@ public class FoodTypeRest extends BaseAction{
 	@Autowired
 	FoodTypeService foodTypeService;
 
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
+	}
+
 	@RequestMapping(value = "/add-rest", method = RequestMethod.POST)
 	public void add(@RequestBody String content,
 			HttpServletRequest request,HttpServletResponse response) {
@@ -41,11 +52,15 @@ public class FoodTypeRest extends BaseAction{
 		try {
 			try {
 				//jsonObject = JSONObject.fromObject(StringUtil.replaceBlank(content));
-				list = gson.fromJson(StringUtil.replaceBlank(content), new TypeToken<List<FoodType>>(){}.getType()); 
+				list = gson.fromJson(content, new TypeToken<List<FoodType>>(){}.getType()); 
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 				throw new Exception("JSON格式或解码错误");
+			}
+			
+			if(list==null){
+				throw new Exception("上传数据不为空");
 			}
 			
 			for(FoodType foodType : list){
@@ -78,11 +93,16 @@ public class FoodTypeRest extends BaseAction{
 		ConditionVO vo = new ConditionVO();
 		try {
 			platNo = request.getHeader("platNo"); 
+			if(platNo==null||"".equals(platNo)){
+				throw new Exception("餐台号不能为空");
+			}
 			list = foodTypeService.queryFoodTypesByCant(platNo);
+			map.put("success", "true"); 
+			map.put("list", list); 
 		} catch (Exception e) {
 			e.printStackTrace();
 			map.put("message", e.getMessage()); 
-			renderJson(map,response);
+			map.put("success", "false"); 
 			//return map;
 		}finally{
 			vo = null;
@@ -90,7 +110,7 @@ public class FoodTypeRest extends BaseAction{
 		}
 		//return list;
 		response.setStatus(200);
-		renderJson(list,response);
+		renderJson(map,response);
 	}
 	
 }

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.sc.dao.system.MaterialMapper" >
+
+    <resultMap id="RM.Material" type="com.sc.pojo.Material">
+        <result property="sn" column="sn"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="remark" column="remark"/>
+        <result property="orgCode" column="org_code"/>
+        <result property="p1" column="p1"/>
+        <result property="p2" column="p2"/>
+    </resultMap>
+
+	<sql id="Material.columns">
+	    <![CDATA[
+        sn ,name ,price ,remark ,org_code ,p1 ,p2 
+	    ]]>
+	</sql>
+	
+    <insert id="insert" >
+    <![CDATA[
+        INSERT INTO material (
+        	sn ,
+        	name ,
+        	price ,
+        	remark ,
+        	org_code ,
+        	p1 ,
+        	p2 
+        ) VALUES (
+			nextVal('material') ,
+			#{name} ,
+			#{price} ,
+			#{remark} ,
+			#{orgCode} ,
+			#{p1} ,
+			#{p2} 
+        )
+    ]]>
+    <!--
+    mysql:		type="post" SELECT  select last_insert_id()
+    sqlserver:	type="post" SELECT  @@identity  AS  ID
+    oracle:		type="pre" 	SELECT  sequenceName.nextval AS ID FROM DUAL
+    DB2:		type="pre"	values nextval for sequenceName
+        <selectKey resultClass="java.lang.Long" type="post" keyProperty="sn" >
+            select last_insert_id()
+        </selectKey>
+    -->
+    </insert>
+
+    <update id="update" >
+    <![CDATA[
+        UPDATE material SET
+	        name = #{name} ,
+	        price = #{price} ,
+	        remark = #{remark} ,
+	        org_code = #{orgCode} ,
+	        p1 = #{p1} ,
+	        p2 = #{p2} 
+        WHERE 
+	        sn = #{sn} 
+    ]]>
+    </update>
+
+    <delete id="delete">
+    <![CDATA[
+        DELETE FROM material WHERE
+        sn = #{sn} 
+    ]]>
+    </delete>
+    
+    <select id="getById" resultMap="RM.Material">
+	    SELECT <include refid="Material.columns"/>
+	    <![CDATA[
+	        FROM material 
+	        WHERE 
+		        sn = #{sn} 
+	    ]]>
+    </select>
+
+	<sql id="Material.findPage.where">
+	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
+		       <if test="sn !=null">
+		            AND sn = #{sn}
+		       </if>
+		       <if test="name !=null">
+		            AND name = #{name}
+		       </if>
+		       <if test="price !=null">
+		            AND price = #{price}
+		       </if>
+		       <if test="remark !=null">
+		            AND remark = #{remark}
+		       </if>
+		       <if test="orgCode !=null">
+		            AND org_code = #{orgCode}
+		       </if>
+		       <if test="p1 !=null">
+		            AND p1 = #{p1}
+		       </if>
+		       <if test="p2 !=null">
+		            AND p2 = #{p2}
+		       </if>
+	    </trim>	
+	</sql>
+	 
+    <select id="findPageCount" resultType="java.lang.Integer">
+        SELECT count(*) FROM material <include refid="Material.findPage.where"/>    
+    </select>
+    
+    <select id="findPage" resultMap="RM.Material">
+    	SELECT <include refid="Material.columns"/> FROM material 
+		<include refid="Material.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+    
+    <select id="query" resultMap="RM.Material">
+    	SELECT <include refid="Material.columns"/> FROM material 
+		<include refid="Material.findPage.where"/>
+		<if test="sortColumns != null" >
+			order by #{sortColumns}
+		</if>
+    </select>
+
+	
+</mapper>
+
