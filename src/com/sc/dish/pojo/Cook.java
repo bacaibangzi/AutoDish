@@ -39,6 +39,7 @@ public class Cook extends CubeBaseEntity implements java.io.Serializable,Cloneab
 	private java.lang.String sn;
 	private java.lang.String name;
 	private java.lang.String sex;
+	private java.lang.String sexStr;
 	private java.util.Date birthday;
 	private java.lang.String phone;
 	private java.lang.String remark;
@@ -54,6 +55,14 @@ public class Cook extends CubeBaseEntity implements java.io.Serializable,Cloneab
 		java.lang.String sn
 	){
 		this.sn = sn;
+	}
+
+	public java.lang.String getSexStr() {
+		return sexStr;
+	}
+
+	public void setSexStr(java.lang.String sexStr) {
+		this.sexStr = sexStr;
 	}
 
 	public void setSn(java.lang.String value)
@@ -78,6 +87,11 @@ public class Cook extends CubeBaseEntity implements java.io.Serializable,Cloneab
 	public void setSex(java.lang.String value)
     {
 		this.sex = value;
+		if("0".equals(value)){
+			this.setSexStr("女");
+		}else{
+			this.setSexStr("男");
+		}
 	}
 	
 	public java.lang.String getSex()

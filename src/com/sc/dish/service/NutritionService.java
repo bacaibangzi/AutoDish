@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sc.dish.dao.NutritionMapper;
 import com.sc.dish.pojo.Nutrition;
@@ -12,6 +13,7 @@ import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Service
 public class NutritionService extends BaseService<Nutrition>{
 	@Autowired
 	NutritionMapper NutritionMapper;

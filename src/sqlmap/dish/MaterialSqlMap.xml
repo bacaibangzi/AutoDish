@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 
-<mapper namespace="com.sc.dao.system.MaterialMapper" >
+<mapper namespace="com.sc.dish.dao.MaterialMapper" >
 
-    <resultMap id="RM.Material" type="com.sc.pojo.Material">
+    <resultMap id="RM.Material" type="com.sc.dish.pojo.Material">
         <result property="sn" column="sn"/>
         <result property="name" column="name"/>
         <result property="price" column="price"/>

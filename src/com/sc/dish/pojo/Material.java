@@ -34,7 +34,7 @@ public class Material extends CubeBaseEntity implements java.io.Serializable,Clo
 	///columns START
 	private java.lang.String sn;
 	private java.lang.String name;
-	private Long price;
+	private double price;
 	private java.lang.String remark;
 	private java.lang.String orgCode;
 	private java.lang.String p1;
@@ -69,12 +69,12 @@ public class Material extends CubeBaseEntity implements java.io.Serializable,Clo
     {
 		return this.name;
 	}
-	public void setPrice(Long value)
+	public void setPrice(double value)
     {
 		this.price = value;
 	}
 	
-	public Long getPrice()
+	public double getPrice()
     {
 		return this.price;
 	}

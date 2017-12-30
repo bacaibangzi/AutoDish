@@ -5,16 +5,23 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sc.dish.dao.MenuNutritionMapper;
+import com.sc.dish.dao.NutritionMapper;
+import com.sc.dish.pojo.MenuMaterial;
 import com.sc.dish.pojo.MenuNutrition;
+import com.sc.dish.pojo.Nutrition;
 import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Service
 public class MenuNutritionService extends BaseService<MenuNutrition>{
 	@Autowired
 	MenuNutritionMapper menuNutritionMapper;
+	@Autowired
+	NutritionMapper nutritionMapper;
 
 	/**
 	 * 删除APP
@@ -35,6 +42,18 @@ public class MenuNutritionService extends BaseService<MenuNutrition>{
 		return true;
 	}
 	 
+	public void save(ConditionVO vo)throws Exception{
+		for (String id : vo.getEntityIds().split(",")) {
+			Nutrition nutrition = nutritionMapper.getById(Long.parseLong(id));
+			
+			MenuNutrition menuNutrition = new MenuNutrition();
+			menuNutrition.setDishSn(vo.getEntityId());
+			menuNutrition.setMaterialSn(id);
+			menuNutrition.setP1(nutrition.getName());
+			
+			menuNutritionMapper.insert(menuNutrition);
+		}
+	}
 
 	/**
 	 * 根据Id得到APP信息

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.sc.framework.base.action.BaseAction;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Controller
 @RequestMapping("/material")
 public class MaterialAction extends BaseAction {
 	@Autowired
@@ -27,6 +29,7 @@ public class MaterialAction extends BaseAction {
 	 */
 	@RequestMapping(value = "/main.htm", method = RequestMethod.GET)
 	public String toMain() {
+		System.out.println("--> main");
 		return "dish/materialMain";
 	}
 

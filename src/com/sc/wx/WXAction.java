@@ -122,7 +122,7 @@ public class WXAction {
 	@ResponseBody
 	public String sendSms(@RequestParam String telephone,HttpServletRequest request,HttpServletResponse response)throws Exception{
 		String code = StringUtil.randomString(4);
-		SmsUtil.sendMessage(telephone, "19110", "#yzm#="+code);
+		SmsUtil.sendMessage(telephone, "57784", "#code#="+code);
 		phoneSms.put(telephone, code);
 		return "true";
 	}

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.sc.framework.base.action.BaseAction;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Controller
 @RequestMapping("/menuMaterial")
 public class MenuMaterialAction extends BaseAction {
 	@Autowired
@@ -59,7 +61,7 @@ public class MenuMaterialAction extends BaseAction {
 		if(vo.getEntityId()!=null){
 			BeanUtils.copyProperties(menuMaterialService.getMenuMaterialById(vo),MenuMaterial);
 		} 
-		return "dish/MenuMaterialEidt";
+		return "dish/menuMaterialEidt";
 	}
 	
 	/**
@@ -73,7 +75,7 @@ public class MenuMaterialAction extends BaseAction {
 	public String detail(@ModelAttribute ConditionVO vo,@ModelAttribute("form") MenuMaterial MenuMaterial,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		BeanUtils.copyProperties(menuMaterialService.getMenuMaterialById(vo),MenuMaterial);
-		return "dish/MenuMaterialDetail";
+		return "dish/menuMaterialDetail";
 	}
 	
 	/**
@@ -87,7 +89,9 @@ public class MenuMaterialAction extends BaseAction {
 	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute MenuMaterial MenuMaterial,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		
-		menuMaterialService.saveOrUpdateMenuMaterialInfo(MenuMaterial);
+		//menuMaterialService.saveOrUpdateMenuMaterialInfo(MenuMaterial);
+		menuMaterialService.save(vo);
+		
 		return "dish/menuMaterialMain";
 	}
 	

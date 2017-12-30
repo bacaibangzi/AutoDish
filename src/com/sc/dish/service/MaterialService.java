@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.sc.dish.dao.MaterialMapper;
 import com.sc.dish.pojo.Material;
@@ -12,6 +13,7 @@ import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Service
 public class MaterialService extends BaseService<Material>{
 	@Autowired
 	MaterialMapper materialMapper;

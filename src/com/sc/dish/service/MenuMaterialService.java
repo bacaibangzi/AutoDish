@@ -5,16 +5,22 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.sc.dish.dao.MaterialMapper;
 import com.sc.dish.dao.MenuMaterialMapper;
+import com.sc.dish.pojo.Material;
 import com.sc.dish.pojo.MenuMaterial;
 import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Service
 public class MenuMaterialService extends BaseService<MenuMaterial>{
 	@Autowired
 	MenuMaterialMapper menuMaterialMapper;
+	@Autowired
+	MaterialMapper materialMapper;
 
 	/**
 	 * 删除APP
@@ -35,6 +41,19 @@ public class MenuMaterialService extends BaseService<MenuMaterial>{
 		return true;
 	}
 	 
+	
+	public void save(ConditionVO vo)throws Exception{
+		for (String id : vo.getEntityIds().split(",")) {
+			Material material = materialMapper.getById(Long.parseLong(id));
+			
+			MenuMaterial menuMaterial = new MenuMaterial();
+			menuMaterial.setDishSn(vo.getEntityId());
+			menuMaterial.setMaterialSn(id);
+			menuMaterial.setP1(material.getName());
+			
+			menuMaterialMapper.insert(menuMaterial);
+		}
+	}
 
 	/**
 	 * 根据Id得到APP信息

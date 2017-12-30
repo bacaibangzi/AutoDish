@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 
-<mapper namespace="com.sc.dao.system.MenuNutritionMapper" >
+<mapper namespace="com.sc.dish.dao.MenuNutritionMapper" >
 
-    <resultMap id="RM.MenuNutrition" type="com.sc.pojo.MenuNutrition">
+    <resultMap id="RM.MenuNutrition" type="com.sc.dish.pojo.MenuNutrition">
         <result property="sn" column="sn"/>
         <result property="dishSn" column="dish_sn"/>
         <result property="materialSn" column="material_sn"/>

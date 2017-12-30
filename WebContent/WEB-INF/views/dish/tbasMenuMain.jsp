@@ -28,6 +28,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<em class="gray_r"></em> 
 							新增
 						</a>
+						
+						<a hideFocus="true" href="javascript:yuanl()" class="gray_radiu_btn" >
+							<em class="gray_l"></em> 
+							<em class="gray_r"></em> 
+							设置原料
+						</a>
+						
+						<a hideFocus="true" href="javascript:yingyang()" class="gray_radiu_btn" >
+							<em class="gray_l"></em> 
+							<em class="gray_r"></em> 
+							设置营养项目
+						</a>
+						
+						<a hideFocus="true" href="javascript:chushi()" class="gray_radiu_btn" >
+							<em class="gray_l"></em> 
+							<em class="gray_r"></em> 
+							设置厨师
+						</a>
 				</div>
 				<div class="right_opts">
 					<sec:authorize ifAnyGranted="<%=delMenu %>">
@@ -139,8 +157,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		/** 删除**/
 		function deleteAll()
 		{
-			
-			
+		
 			var rows=getSeleteObjs(datatable);//alert(rows.length);
 			if(rows.length!=1){
 				fh.alert("请选择一条记录");
@@ -152,6 +169,43 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				batchDelete( {rows:rows,idField:"idStr",actionUrl:actionUrl});
 			}
 		}
+		
+		// 原料
+		function yuanl(){
+			var rows=getSeleteObjs(datatable);//alert(rows.length);
+			if(rows.length!=1){
+				fh.alert("请选择一条记录");
+				return;
+			}
+			var selectId = rows[0]["idStr"];
+			var commonDialog = commonOpenDialog("yuanl",'原料信息',800,500, '<%=basePath%>menuMaterial/main.htm?entityId=' + selectId);
+			commonDialog.addBtn("ok",'确定', commonDialog.cancel);
+		}
+		
+		// 营养
+		function yingyang(){
+			var rows=getSeleteObjs(datatable);//alert(rows.length);
+			if(rows.length!=1){
+				fh.alert("请选择一条记录");
+				return;
+			}
+			var selectId = rows[0]["idStr"];
+			var commonDialog = commonOpenDialog("yuanl",'营养信息',800,500, '<%=basePath%>menuNutrition/main.htm?entityId=' + selectId);
+			commonDialog.addBtn("ok",'确定', commonDialog.cancel);
+		}
+		
+		// 厨师
+		function chushi(){
+			var rows=getSeleteObjs(datatable);//alert(rows.length);
+			if(rows.length!=1){
+				fh.alert("请选择一条记录");
+				return;
+			}
+			var selectId = rows[0]["idStr"];
+			var commonDialog = commonOpenDialog("yuanl",'厨师信息',800,500, '<%=basePath%>menuCook/main.htm?entityId=' + selectId);
+			commonDialog.addBtn("ok",'确定', commonDialog.cancel);
+		}
+		
 	</script>
 		
 </html>

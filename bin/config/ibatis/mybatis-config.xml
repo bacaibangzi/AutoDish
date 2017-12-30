@@ -46,5 +46,12 @@
 			<mapper resource="sqlmap/dish/TbasPlatinfoSqlMap.xml" />
 			<mapper resource="sqlmap/dish/WeightUnitSqlMap.xml" />
 			
+			<mapper resource="sqlmap/dish/CookSqlMap.xml" />
+			<mapper resource="sqlmap/dish/MaterialSqlMap.xml" />
+			<mapper resource="sqlmap/dish/NutritionSqlMap.xml" />
+			<mapper resource="sqlmap/dish/MenuCookSqlMap.xml" />
+			<mapper resource="sqlmap/dish/MenuMaterialSqlMap.xml" />
+			<mapper resource="sqlmap/dish/MenuNutritionSqlMap.xml" />
+			
 		</mappers>
 </configuration>

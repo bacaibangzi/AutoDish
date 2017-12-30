@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 
-<mapper namespace="com.sc.dao.system.CookMapper" >
+<mapper namespace="com.sc.dish.dao.CookMapper" >
 
-    <resultMap id="RM.Cook" type="com.sc.pojo.Cook">
+    <resultMap id="RM.Cook" type="com.sc.dish.pojo.Cook">
         <result property="sn" column="sn"/>
         <result property="name" column="name"/>
         <result property="sex" column="sex"/>

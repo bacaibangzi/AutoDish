@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.sc.framework.base.action.BaseAction;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
+@Controller
 @RequestMapping("/menuNutrition")
 public class MenuNutritionAction extends BaseAction {
 	@Autowired
@@ -59,7 +61,7 @@ public class MenuNutritionAction extends BaseAction {
 		if(vo.getEntityId()!=null){
 			BeanUtils.copyProperties(menuNutritionService.getMenuNutritionById(vo),MenuNutrition);
 		} 
-		return "dish/MenuNutritionEidt";
+		return "dish/menuNutritionEidt";
 	}
 	
 	/**
@@ -73,7 +75,7 @@ public class MenuNutritionAction extends BaseAction {
 	public String detail(@ModelAttribute ConditionVO vo,@ModelAttribute("form") MenuNutrition MenuNutrition,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		BeanUtils.copyProperties(menuNutritionService.getMenuNutritionById(vo),MenuNutrition);
-		return "dish/MenuNutritionDetail";
+		return "dish/menuNutritionDetail";
 	}
 	
 	/**
@@ -88,7 +90,7 @@ public class MenuNutritionAction extends BaseAction {
 		request.setAttribute("vo", vo);
 		
 		menuNutritionService.saveOrUpdateMenuNutritionInfo(MenuNutrition);
-		return "dish/MenuNutritionMain";
+		return "dish/menuNutritionMain";
 	}
 	
 	/**
@@ -101,7 +103,7 @@ public class MenuNutritionAction extends BaseAction {
 	public String delete(@ModelAttribute ConditionVO vo,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		menuNutritionService.deleteMenuNutritionById(vo);
-		return "dish/MenuNutritionMain";
+		return "dish/menuNutritionMain";
 	}
 
 }
