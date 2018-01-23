@@ -78,7 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			tableObj.aoColumns=[
 				{"mDataProp":"","sDefaultContent":"<input type='checkbox' />","bSortable":false,"sWidth":"20px",sClass:"checkbox"},
 				{"mDataProp":"sn","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
-				{"mDataProp":"platNo","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"200"},
+				{"mDataProp":"platNo","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
 				{"mDataProp":"platName","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
 				{"mDataProp":"bossname","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
 				{"mDataProp":"phone","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},

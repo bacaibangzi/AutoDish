@@ -86,11 +86,13 @@ public class MenuNutritionAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
+	@ResponseBody
 	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute MenuNutrition MenuNutrition,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		
-		menuNutritionService.saveOrUpdateMenuNutritionInfo(MenuNutrition);
-		return "dish/menuNutritionMain";
+		menuNutritionService.save(vo);
+		//return "dish/menuNutritionMain";
+		return "true";
 	}
 	
 	/**
@@ -99,7 +101,8 @@ public class MenuNutritionAction extends BaseAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/delete.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete.htm", method = RequestMethod.POST)
+	@ResponseBody
 	public String delete(@ModelAttribute ConditionVO vo,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		menuNutritionService.deleteMenuNutritionById(vo);

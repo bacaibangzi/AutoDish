@@ -106,8 +106,11 @@
 		       <if test="unitZhxs !=null">
 		            AND UNIT_ZHXS = #{unitZhxs}
 		       </if>
-		       <if test="orgCode !=null">
+		       <if test="orgCode1 !=null">
 		            AND ORG_CODE like concat('', #{orgCode}, '%')
+		       </if>
+		       <if test="orgCode !=null">
+		            AND ORG_CODE  = #{orgCode} 
 		       </if>
 		       <if test="p1 !=null">
 		            AND P1 = #{p1}

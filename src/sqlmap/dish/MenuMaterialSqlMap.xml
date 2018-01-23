@@ -63,7 +63,7 @@
 
     <delete id="delete">
     <![CDATA[
-        DELETE FROM menu_material WHERE
+        DELETE FROM menu_material WHERE sn = #{sn}
     ]]>
     </delete>
     

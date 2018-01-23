@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<span class="field-tips"></span>
 						</td>
 						<td >
-							<form:textarea  path="oiMemo" rows="5" cols="26" cssClass="input-area {required: true, maxlength: 20}" />
+							<form:textarea  path="oiMemo" rows="5" cols="26" cssClass="input-area { maxlength: 20}" />
 						</td>
 					</tr>
 				</tbody>
@@ -99,19 +99,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 			<%-- 内容保存 --%>
 		    function submitCheck(){
-		    	var orgType = $("#orgCode");
-			    if(orgType==""){
-				    fh.alert("请先选择食堂！");
-				    return false;
-			    }
 		    	var validate = $("#form").validate({meta:"validate"});
 				if(validate.form()){
+			    	var orgName = $("#orgName").val();
+				    if(orgName==""){
+					    fh.alert("请先选择食堂！");
+					    return false;
+				    }
 		    		$("#form").submit();  
 		   		}
 		   	}
 		    
 			var orgCode = "";
 			var orgName = "";
+			var orgType = "";
 			function showOrgTree()
 			{
 
@@ -119,6 +120,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				commonDialog.addBtn("cancel",'取消', commonDialog.cancel);
 				commonDialog.addBtn("ok",'确定', function()
 				{
+
+					orgType = $("#orgType", commonDialog.dgDoc).val();
+					if(orgType!='1'){
+						fh.alert("请先选择食堂！");
+						return;
+					}
 					orgCode = $("#orgCode", commonDialog.dgDoc).val();
 					orgName = $("#orgName", commonDialog.dgDoc).val();
 					

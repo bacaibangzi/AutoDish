@@ -45,7 +45,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 						<th><input type="checkbox" /></th>
 						<th>序号</th>
-						<th>餐台</th>
 						<th>类型编号</th>
 						<th>类型名称</th>
 					</tr>
@@ -76,9 +75,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			tableObj.aoColumns=[
 				{"mDataProp":"","sDefaultContent":"<input type='checkbox' />","bSortable":false,"sWidth":"20px",sClass:"checkbox"},
 				{"mDataProp":"sn","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
-				{"mDataProp":"platName","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"200"},
 				{"mDataProp":"typeId","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"200"},
-				{"mDataProp":"typeName","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"}
+				{"mDataProp":"typeName","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"200"}
 			];
 			//添加额外的参数DateString
 			tableObj.fnServerParams= function ( aoData ) 

@@ -31,7 +31,7 @@
 	
     <insert id="insert" >
     <![CDATA[
-        replace INTO t_bas_menu (
+        insert INTO t_bas_menu (
         	SN ,
         	PLAT_NO ,
         	PLAT_Name ,

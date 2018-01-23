@@ -30,6 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="bigTreeDiv"></div>
 	<input type="hidden" id="orgCode" name="orgCode" />
 	<input type="hidden" id="orgName" name="orgName" />
+	<input type="hidden" id="orgType" name="orgType" />
 	<script type="text/javascript" src="<%=basePath %>common/js/ln.cookies.config.js"></script>
 	<script type="text/javascript" src="<%=basePath %>common/js/tree/js/tree.js"></script>
 	<script type="text/javascript" src="<%=basePath %>common/js/tree/js/jquery.contextMenu.js"></script>
@@ -51,6 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					onnodeclick:function(area){
 						document.getElementById('orgCode').value = area.code;
 						document.getElementById('orgName').value = area.text;
+						document.getElementById('orgType').value = area.type;
 					},
 					data: orgData
 				}; 

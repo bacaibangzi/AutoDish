@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -110,10 +111,17 @@ public class TbasPlatinfoAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
-	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute TbasPlatinfo TbasPlatinfo,HttpServletRequest request) throws Exception{
+	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute("form") TbasPlatinfo TbasPlatinfo,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
-		
-		tbasPlatinfoService.saveOrUpdateTbasPlatinfoInfo(TbasPlatinfo);
+		try{
+			tbasPlatinfoService.saveOrUpdateTbasPlatinfoInfo(TbasPlatinfo);
+		}catch(Exception err){
+			err.printStackTrace();
+			if( err instanceof DuplicateKeyException){
+				vo.setErrMsg("编码重复");
+				return "dish/tbasPlatinfoEidt";
+			}
+		}
 		return "dish/tbasPlatinfoMain";
 	}
 	

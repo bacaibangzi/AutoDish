@@ -39,6 +39,7 @@ public class Nutrition extends CubeBaseEntity implements java.io.Serializable,Cl
 	private java.lang.String orgCode;
 	private java.lang.String p1;
 	private java.lang.String p2;
+	private String no;
 	///columns END
 
 	public Nutrition(){
@@ -48,6 +49,14 @@ public class Nutrition extends CubeBaseEntity implements java.io.Serializable,Cl
 		java.lang.String sn
 	){
 		this.sn = sn;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
 	}
 
 	public void setSn(java.lang.String value)

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -129,36 +130,37 @@ public class TbasMenuAction extends BaseAction {
 		Map<String,String> useFlagMap = new HashMap<String,String>();
 		useFlagMap.put("0", "不启用");
 		useFlagMap.put("1", "启用");
-		
-		TbasMenu tm = tbasMenuService.getTbasMenuById(vo);
-		
-		Map<String,String> foodTypeMap = new HashMap<String,String>();
-		try {
-			List<FoodType> list = foodTypeService.queryFoodTypesByCant(tm.getPlatNo());
-			for(FoodType foodType : list){
-				foodTypeMap.put(foodType.getTypeId(), foodType.getTypeName());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		Map<String,String> weightUnitMap = new HashMap<String,String>();
-		try {
-			List<WeightUnit> list = weightUnitService.queryWeightUnitsByCant(tm.getPlatNo());
-			for(WeightUnit weightUnit : list){
-				weightUnitMap.put(weightUnit.getUnitId(), weightUnit.getUnitName());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		request.setAttribute("vo", vo);
+
 		if(vo.getEntityId()!=null){
+			TbasMenu tm = tbasMenuService.getTbasMenuById(vo);
+			
+			Map<String,String> foodTypeMap = new HashMap<String,String>();
+			try {
+				List<FoodType> list = foodTypeService.queryFoodTypesByCant(tm.getPlatNo());
+				for(FoodType foodType : list){
+					foodTypeMap.put(foodType.getTypeId(), foodType.getTypeName());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			Map<String,String> weightUnitMap = new HashMap<String,String>();
+			try {
+				List<WeightUnit> list = weightUnitService.queryWeightUnitsByCant(tm.getPlatNo());
+				for(WeightUnit weightUnit : list){
+					weightUnitMap.put(weightUnit.getUnitId(), weightUnit.getUnitName());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			request.setAttribute("vo", vo);
 			BeanUtils.copyProperties(tm,TbasMenu);
+			request.setAttribute("foodTypeMap", foodTypeMap);
+			request.setAttribute("weightUnitMap", weightUnitMap);
 		} 
 		request.setAttribute("useFlagMap", useFlagMap);
-		request.setAttribute("foodTypeMap", foodTypeMap);
-		request.setAttribute("weightUnitMap", weightUnitMap);
+		
 		return "dish/tbasMenuEidt";
 	}
 	
@@ -184,10 +186,48 @@ public class TbasMenuAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
-	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute TbasMenu TbasMenu,HttpServletRequest request) throws Exception{
+	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute("form") TbasMenu tbasMenu,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		
-		tbasMenuService.saveOrUpdateTbasMenuInfo(TbasMenu);
+		Map<String,String> useFlagMap = new HashMap<String,String>();
+		useFlagMap.put("0", "不启用");
+		useFlagMap.put("1", "启用");
+		request.setAttribute("useFlagMap", useFlagMap);
+		
+		
+		Map<String,String> foodTypeMap = new HashMap<String,String>();
+		try {
+			List<FoodType> list = foodTypeService.queryFoodTypesByCant(tbasMenu.getPlatNo());
+			for(FoodType foodType : list){
+				foodTypeMap.put(foodType.getTypeId(), foodType.getTypeName());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Map<String,String> weightUnitMap = new HashMap<String,String>();
+		try {
+			List<WeightUnit> list = weightUnitService.queryWeightUnitsByCant(tbasMenu.getPlatNo());
+			for(WeightUnit weightUnit : list){
+				weightUnitMap.put(weightUnit.getUnitId(), weightUnit.getUnitName());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		request.setAttribute("foodTypeMap", foodTypeMap);
+		request.setAttribute("weightUnitMap", weightUnitMap);
+		
+		
+		try{
+			tbasMenuService.saveOrUpdateTbasMenuInfo(tbasMenu);
+		}catch(Exception err){
+			err.printStackTrace();
+			if( err instanceof DuplicateKeyException){
+				vo.setErrMsg("编码重复");
+				return "dish/tbasMenuEidt";
+			}
+		}
 		return "dish/tbasMenuMain";
 	}
 	

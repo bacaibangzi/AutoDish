@@ -86,11 +86,13 @@ public class MenuCookAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
+	@ResponseBody
 	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute MenuCook MenuCook,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		
-		menuCookService.saveOrUpdateMenuCookInfo(MenuCook);
-		return "dish/menuCookMain";
+		menuCookService.save(vo);
+		//return "dish/menuCookMain";
+		return "true";
 	}
 	
 	/**
@@ -99,7 +101,8 @@ public class MenuCookAction extends BaseAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/delete.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete.htm", method = RequestMethod.POST)
+	@ResponseBody
 	public String delete(@ModelAttribute ConditionVO vo,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		menuCookService.deleteMenuCookById(vo);

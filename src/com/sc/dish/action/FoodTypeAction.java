@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,12 +64,12 @@ public class FoodTypeAction extends BaseAction {
 	public String eidt(@ModelAttribute ConditionVO vo,@ModelAttribute("form") FoodType FoodType,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		if(vo.getEntityId()!=null){
-			
+
 			FoodType ft = foodTypeService.getFoodTypeById(vo);
-			
-			TbasPlatinfo tbasPlatinfo = tbasPlatinfoService.getByNoOrgCode(ft.getPlatNo(), ft.getOrgCode());
-			
+			/*
+			TbasPlatinfo tbasPlatinfo = tbasPlatinfoService.getByNoOrgCode(ft.getPlatNo(), ft.getOrgCode());		
 			request.setAttribute("name", tbasPlatinfo.getPlatName());
+			*/
 			
 			BeanUtils.copyProperties(ft,FoodType);
 		}
@@ -97,10 +98,17 @@ public class FoodTypeAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
-	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute FoodType FoodType,HttpServletRequest request) throws Exception{
+	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute("form") FoodType FoodType,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
-		
-		foodTypeService.saveOrUpdateFoodTypeInfo(FoodType);
+		try{
+			foodTypeService.saveOrUpdateFoodTypeInfo(FoodType);
+		}catch(Exception err){
+			err.printStackTrace();
+			if( err instanceof DuplicateKeyException){
+				vo.setErrMsg("编码重复");
+				return "dish/foodTypeEidt";
+			}
+		}
 		return "dish/foodTypeMain";
 	}
 	

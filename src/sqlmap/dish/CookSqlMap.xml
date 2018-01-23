@@ -7,6 +7,7 @@
     <resultMap id="RM.Cook" type="com.sc.dish.pojo.Cook">
         <result property="sn" column="sn"/>
         <result property="name" column="name"/>
+        <result property="no" column="no"/>
         <result property="sex" column="sex"/>
         <result property="birthday" column="birthday"/>
         <result property="phone" column="phone"/>
@@ -18,14 +19,14 @@
 
 	<sql id="Cook.columns">
 	    <![CDATA[
-        sn ,name ,sex ,birthday ,phone ,remark ,org_code ,p1 ,p2 
+        sn ,name ,sex ,birthday ,phone ,remark ,org_code ,p1 ,p2 ,no
 	    ]]>
 	</sql>
 	
     <insert id="insert" >
     <![CDATA[
         INSERT INTO cook (
-        	sn ,
+        	sn , no ,
         	name ,
         	sex ,
         	birthday ,
@@ -35,7 +36,7 @@
         	p1 ,
         	p2 
         ) VALUES (
-			nextVal('cook') ,
+			nextVal('cook') ,#{no} ,
 			#{name} ,
 			#{sex} ,
 			#{birthday} ,
@@ -61,6 +62,7 @@
     <![CDATA[
         UPDATE cook SET
 	        name = #{name} ,
+	        no = #{no} ,
 	        sex = #{sex} ,
 	        birthday = #{birthday} ,
 	        phone = #{phone} ,

@@ -6,6 +6,7 @@
 
     <resultMap id="RM.Nutrition" type="com.sc.dish.pojo.Nutrition">
         <result property="sn" column="sn"/>
+        <result property="no" column="no"/>
         <result property="name" column="name"/>
         <result property="value" column="value"/>
         <result property="remark" column="remark"/>
@@ -16,14 +17,14 @@
 
 	<sql id="Nutrition.columns">
 	    <![CDATA[
-        sn ,name ,value ,remark ,org_code ,p1 ,p2 
+        sn ,name ,value ,remark ,org_code ,p1 ,p2 ,no
 	    ]]>
 	</sql>
 	
     <insert id="insert" >
     <![CDATA[
         INSERT INTO nutrition (
-        	sn ,
+        	sn ,no ,
         	name ,
         	value ,
         	remark ,
@@ -31,7 +32,7 @@
         	p1 ,
         	p2 
         ) VALUES (
-			nextVal('nutrition') ,
+			nextVal('nutrition') ,#{no} ,
 			#{name} ,
 			#{value} ,
 			#{remark} ,
@@ -55,6 +56,7 @@
     <![CDATA[
         UPDATE nutrition SET
 	        name = #{name} ,
+	        no = #{no} ,
 	        value = #{value} ,
 	        remark = #{remark} ,
 	        org_code = #{orgCode} ,

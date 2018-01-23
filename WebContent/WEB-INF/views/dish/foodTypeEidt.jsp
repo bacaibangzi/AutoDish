@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<form:form commandName="form" id="form" action="../foodType/save.htm" method="post">
 				<input type="hidden" name="sn" value="${form.sn }" />
 				<input type="hidden" id ="orgCode" name="orgCode" value="${form.orgCode }" />
+				<div style="color:#F00;font-size:22px;">${vo.errMsg}</div><br>
 				<table class="form-table" width="100%" border="0" cellspa3cing="0" cellpadding="0">
 				<colspan>
 					<col class="w_30per" />
@@ -49,18 +50,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<form:input path="typeName"  cssClass="input-text {required: true, maxlength: 20}"/>
 						</td>
 					</tr>
+					<!--  
 					<tr>	
 						<td class="hd" >
 							所属餐台
 							<span class="field-tips">*</span>
 						</td>
 						<td >
-							<input type="text" class="filter-text" id="platName" name="platName" readonly="readonly" value="${name}"/>
-							<!-- <button onclick="showOrgTree()">.</button> -->
+							<input type="text" class="filter-text" id="platName" name="platName" readonly="readonly" value="${form.platName}"/>
 							<input type="button" onclick="showOrgTree()"  value="." />
 							<input type="hidden" id="platNo" name="platNo" value="${form.platNo}" />
 						</td>
 					</tr>
+					-->
 				</tbody>
 				<tfoot>
 					<tr>
@@ -95,6 +97,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    function submitCheck(){
 		    	var validate = $("#form").validate({meta:"validate"});
 				if(validate.form()){
+					/*
+					var platName = $("#platName").val();
+					if(platName==''){
+						fh.alert("请选择餐台!");
+						return;
+					}
+					*/
 		    		$("#form").submit();  
 		   		}
 		   	}

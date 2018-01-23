@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -86,13 +87,15 @@ public class MenuMaterialAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
+	@ResponseBody
 	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute MenuMaterial MenuMaterial,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		
 		//menuMaterialService.saveOrUpdateMenuMaterialInfo(MenuMaterial);
 		menuMaterialService.save(vo);
 		
-		return "dish/menuMaterialMain";
+		//return "dish/menuMaterialMain";
+		return "true";
 	}
 	
 	/**
@@ -101,11 +104,13 @@ public class MenuMaterialAction extends BaseAction {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/delete.htm", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete.htm", method = RequestMethod.POST)
+	@ResponseBody
 	public String delete(@ModelAttribute ConditionVO vo,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		menuMaterialService.deleteMenuMaterialById(vo);
-		return "dish/menuMaterialMain";
+		//return "dish/menuMaterialMain";
+		return "true";
 	}
 
 }

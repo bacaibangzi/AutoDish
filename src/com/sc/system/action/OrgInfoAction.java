@@ -119,6 +119,7 @@ public class OrgInfoAction extends BaseAction {
 	public void list(@ModelAttribute ConditionVO vo,
 			@ModelAttribute Page<OrgInfo> page, HttpServletResponse response) throws Exception {
 		super.setPageInfo(page);
+		vo.setValue("true");
 		Page<OrgInfo> list = orgInfoService.queryOrgInfosForPage(vo, page);
 		super.readerPage2Json(list, response);
 
@@ -246,41 +247,43 @@ public class OrgInfoAction extends BaseAction {
 		List<Map<String, Object>> nodeList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map = null;
 		for (OrgInfo area : list) {
-			map = new HashMap<String, Object>();
-			map.put("id", area.getOiCode());
-			map.put("checkAble", "false");
-			map.put("text", area.getOiName());
-			map.put("value", area.getOiCode());
-			map.put("showcheck", "");
-			map.put("complete", true);
-			map.put("isexpand", false);
-			map.put("checkstate", "0");
-			map.put("hasChildren", false);
-			// map.put("pid", area.getOiCode());// 父节点，取前4位
-			map.put("ChildNodes", new ArrayList());
-			map.put("code", area.getOiCode());
-			map.put("type", area.getOiType());
-			//map.put("imgPath", path);
-			if("0000".equals(area.getOiCode())){
-				map.put("imgPath", "../application/images/org/top.png");
-			}else if("0".equals(area.getOiType())){
-				map.put("imgPath", "../application/images/org/gs.png");
-			}else if("1".equals(area.getOiType())){
-				map.put("imgPath", "../application/images/org/ag.png");
-			}else if("2".equals(area.getOiType())){
-				map.put("imgPath", "../application/images/org/dis.png");
+			if("0".equals(area.getOiType()) || "1".equals(area.getOiType())){
+				map = new HashMap<String, Object>();
+				map.put("id", area.getOiCode());
+				map.put("checkAble", "false");
+				map.put("text", area.getOiName());
+				map.put("value", area.getOiCode());
+				map.put("showcheck", "");
+				map.put("complete", true);
+				map.put("isexpand", false);
+				map.put("checkstate", "0");
+				map.put("hasChildren", false);
+				// map.put("pid", area.getOiCode());// 父节点，取前4位
+				map.put("ChildNodes", new ArrayList());
+				map.put("code", area.getOiCode());
+				map.put("type", area.getOiType());
+				//map.put("imgPath", path);
+				if("0000".equals(area.getOiCode())){
+					map.put("imgPath", "../application/images/org/top.png");
+				}else if("0".equals(area.getOiType())){
+					map.put("imgPath", "../application/images/org/gs.png");
+				}else if("1".equals(area.getOiType())){
+					map.put("imgPath", "../application/images/org/ag.png");
+				}else if("2".equals(area.getOiType())){
+					map.put("imgPath", "../application/images/org/dis.png");
+				}
+				if(area.getOiType()!=null){
+					map.put("text", area.getOiName()+"");
+				}
+				
+				if (org.equals(area.getOiCode())) {
+					map.put("pid", "-1");
+				} else {
+					map.put("pid", area.getOiCode().substring(0,  area.getOiCode().length()-4));
+				}
+	
+				nodeList.add(map);
 			}
-			if(area.getOiType()!=null){
-				map.put("text", area.getOiName()+"");
-			}
-			
-			if (org.equals(area.getOiCode())) {
-				map.put("pid", "-1");
-			} else {
-				map.put("pid", area.getOiCode().substring(0,  area.getOiCode().length()-4));
-			}
-
-			nodeList.add(map);
 		}
 		return nodeList;
 	}
@@ -360,5 +363,68 @@ public class OrgInfoAction extends BaseAction {
 		request.setAttribute("nodeList", new Gson().toJson(nodeList));
 
 		return "system/selectAreaTree";
+	}
+	
+	// 摊位
+	@RequestMapping(value = "/orgTree1.htm", method = RequestMethod.GET)
+	public String orgTree1(@ModelAttribute ConditionVO vo,
+			HttpServletRequest request) throws Exception {
+		request.setAttribute("vo", vo);
+		// 加载组织机构tree 图片路径
+		String path = "../application/images/icon/org_start.png";
+		List<OrgInfo> list = orgInfoService.queryOrgInfosByCondition(vo);
+		List<Map<String, Object>> nodeList = getOrgTreeNode1(list, path, vo
+				.getOrgCode());
+		request.setAttribute("nodeList", new Gson().toJson(nodeList));
+
+		return "system/selectAreaTree";
+	}
+	
+
+
+	public List<Map<String, Object>> getOrgTreeNode1(List<OrgInfo> orgList,
+			String path, String org) {
+		List<OrgInfo> list = orgList;
+		List<Map<String, Object>> nodeList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = null;
+		for (OrgInfo area : list) {
+				map = new HashMap<String, Object>();
+				map.put("id", area.getOiCode());
+				map.put("checkAble", "false");
+				map.put("text", area.getOiName());
+				map.put("value", area.getOiCode());
+				map.put("showcheck", "");
+				map.put("complete", true);
+				map.put("isexpand", false);
+				map.put("checkstate", "0");
+				map.put("hasChildren", false);
+				// map.put("pid", area.getOiCode());// 父节点，取前4位
+				map.put("ChildNodes", new ArrayList());
+				map.put("code", area.getOiCode());
+				map.put("type", area.getOiType());
+				//map.put("imgPath", path);
+				if("0000".equals(area.getOiCode())){
+					map.put("imgPath", "../application/images/org/top.png");
+				}else if("0".equals(area.getOiType())){
+					map.put("imgPath", "../application/images/org/gs.png");
+				}else if("1".equals(area.getOiType())){
+					map.put("imgPath", "../application/images/org/ag.png");
+				}else if("2".equals(area.getOiType())){
+					map.put("imgPath", "../application/images/org/dis.png");
+				}
+				if(area.getOiType()!=null){
+					map.put("text", area.getOiName()+"");
+				}
+				
+				if (org.equals(area.getOiCode())) {
+					map.put("pid", "-1");
+				} else {
+					map.put("pid", area.getOiCode().substring(0,  area.getOiCode().length()-4));
+				}
+	
+				nodeList.add(map);
+			
+		}
+		return nodeList;
 	}
 }

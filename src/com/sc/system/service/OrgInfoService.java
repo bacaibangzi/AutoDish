@@ -94,7 +94,7 @@ public class OrgInfoService extends BaseService<OrgInfo> {
 	public List<OrgInfo> queryOrgInfosByCondition(ConditionVO vo) throws Exception {
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("oiCode", vo.getOrgCode());
-		return orgInfoMapper.findPage(conditionMap);
+		return orgInfoMapper.query(conditionMap);
 	}
 	
 	/**

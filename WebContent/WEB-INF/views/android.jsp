@@ -38,7 +38,7 @@
             <ul>
                 <li><a href="<%=basePath %>toLogin.htm" class="register">返回首页</a></li>
                 <li><a href="<%=basePath %>toReg.htm" class="register">账号注册</a></li>
-                <li><a href="<%=basePath %>toContact.htm" class="callme">联系我们</a></li>
+                <!--  <li><a href="<%=basePath %>toContact.htm" class="callme">联系我们</a></li>-->
             </ul>
         </div>
         <div id="main">

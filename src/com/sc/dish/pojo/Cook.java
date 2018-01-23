@@ -37,6 +37,7 @@ public class Cook extends CubeBaseEntity implements java.io.Serializable,Cloneab
 	///可以直接使用: @Length(max=50,message="用户名长度不能大于50")显示错误消息
 	///columns START
 	private java.lang.String sn;
+	private String no;
 	private java.lang.String name;
 	private java.lang.String sex;
 	private java.lang.String sexStr;
@@ -49,6 +50,14 @@ public class Cook extends CubeBaseEntity implements java.io.Serializable,Cloneab
 	///columns END
 
 	public Cook(){
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
 	}
 
 	public Cook(

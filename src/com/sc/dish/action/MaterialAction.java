@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,10 +88,17 @@ public class MaterialAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
-	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute Material Material,HttpServletRequest request) throws Exception{
+	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute("form")  Material Material,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
-		
-		materialService.saveOrUpdateMaterialInfo(Material);
+		try{
+			materialService.saveOrUpdateMaterialInfo(Material);
+		}catch(Exception err){
+			err.printStackTrace();
+			if( err instanceof DuplicateKeyException){
+				vo.setErrMsg("编码重复");
+				return "dish/materialEidt";
+			}
+		}
 		return "dish/materialMain";
 	}
 	

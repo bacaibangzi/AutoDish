@@ -14,6 +14,11 @@
 	<title>智慧餐饮平台 -登录</title>	
 	<link rel="stylesheet" type="text/css" href="<%=basePath%>dev/idx/css/style.css" />
 	<script type="text/javascript" src="<%=basePath%>dev/idx/js/jquery-1.9.1.js"></script>
+<script>
+	if (window != top){
+		top.location.href = location.href; 
+	}
+</script>
 </head>
 <body>
 <div class="authcenter-head">

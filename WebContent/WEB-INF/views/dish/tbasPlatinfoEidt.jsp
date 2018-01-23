@@ -21,6 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<input type="hidden" name="p1" value="${form.p1 }" />
 				<input type="hidden" name="p2" value="${form.p2 }" />
 				<input type="hidden" name="userid" value="${sessionScope.accountInfo.userId}" />
+				<div style="color:#F00;font-size:22px;">${vo.errMsg}</div><br>
 				<table class="form-table" width="100%" border="0" cellspa3cing="0" cellpadding="0">
 				<colspan>
 					<col class="w_30per" />
@@ -82,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</tr>
 					<tr>	
 						<td class="hd" >
-							所属摊位
+							所属商户
 							<span class="field-tips">*</span>
 						</td>
 						<td >
@@ -125,7 +126,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<%-- 内容保存 --%>
 		    function submitCheck(){
 		    	var validate = $("#form").validate({meta:"validate"});
+		    	
+		    	
 				if(validate.form()){
+			    	// 判断是否选择摊位
+					var orgName = $("#orgName").val();
+					if(orgName==''){
+						fh.alert("请选择摊位!");
+						return;
+					}
+					
 		    		$("#form").submit();  
 		   		}
 		   	}
@@ -137,10 +147,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			function showOrgTree()
 			{
 
-				var commonDialog = commonOpenDialog("readDetail",'选择摊位',700,450, '<%=basePath%>org/orgTree.htm?orgCode=${sessionScope.accountInfo.orgCode}');
+				var commonDialog = commonOpenDialog("readDetail",'选择摊位',700,450, '<%=basePath%>org/orgTree1.htm?orgCode=${sessionScope.accountInfo.orgCode}');
 				commonDialog.addBtn("cancel",'取消', commonDialog.cancel);
 				commonDialog.addBtn("ok",'确定', function()
 				{
+					orgType = $("#orgType", commonDialog.dgDoc).val();
+					if(orgType!='2'){
+						fh.alert("请先选择商户！");
+						return;
+					}
+					
 					orgCode = $("#orgCode", commonDialog.dgDoc).val();
 					orgName = $("#orgName", commonDialog.dgDoc).val();
 					

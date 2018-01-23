@@ -160,7 +160,7 @@
 		            AND OI_TYPE = #{oiType}
 		       </if>
 		       <if test="value !=null">
-		            AND OI_TYPE IN ('2','3','7','8')
+		            AND OI_TYPE IN ('1')
 		       </if>
 		       <if test="notOiCode !=null">
 		            AND OI_CODE &lt;&gt; #{notOiCode}

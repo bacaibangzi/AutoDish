@@ -18,6 +18,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<input type="hidden" name="sn" value="${form.sn }" />
 				<input type="hidden" name="operator" value="${form.operator }" />
 				<input type="hidden" name="orgCode" id="orgCode" value="${form.orgCode }" />
+				<div style="color:#F00;font-size:22px;">${vo.errMsg}</div><br>
 				<table class="form-table" width="100%" border="0" cellspa3cing="0" cellpadding="0">
 				<colspan>
 					<col class="w_30per" />
@@ -152,6 +153,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    function submitCheck(){
 		    	var validate = $("#form").validate({meta:"validate"});
 				if(validate.form()){
+					var platName = $("#platName").val();
+					if(platName==''){
+						fh.alert("请选择餐台!");
+						return;
+					}
 		    		$("#form").submit();  
 		   		}
 		   	}
