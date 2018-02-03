@@ -2,36 +2,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 
-<mapper namespace="com.sc.dish.dao.MenuCookMapper" >
+<mapper namespace="com.sc.dish.dao.MenuMealMapper" >
 
-    <resultMap id="RM.MenuCook" type="com.sc.dish.pojo.MenuCook">
+    <resultMap id="RM.MenuMeal" type="com.sc.dish.pojo.MenuMeal">
         <result property="sn" column="sn"/>
         <result property="dishSn" column="dish_sn"/>
-        <result property="cookSn" column="cook_sn"/>
+        <result property="mealSn" column="Meal_sn"/>
         <result property="remark" column="remark"/>
         <result property="p1" column="p1"/>
         <result property="p2" column="p2"/>
+        <result property="mealName" column="meal_Name"/>
+        <result property="mealNo" column="meal_No"/>
     </resultMap>
 
-	<sql id="MenuCook.columns">
+	<sql id="MenuMeal.columns">
 	    <![CDATA[
-        sn ,dish_sn ,cook_sn ,remark ,p1 ,p2 
+        sn ,dish_sn ,Meal_sn ,remark ,p1 ,p2 
 	    ]]>
 	</sql>
 	
     <insert id="insert" >
     <![CDATA[
-        INSERT INTO menu_cook (
+        INSERT INTO menu_Meal (
         	sn ,
         	dish_sn ,
-        	cook_sn ,
+        	Meal_sn ,
         	remark ,
         	p1 ,
         	p2 
         ) VALUES (
-			nextVal('menu_cook') ,
+			nextVal('menu_Meal') ,
 			#{dishSn} ,
-			#{cookSn} ,
+			#{mealSn} ,
 			#{remark} ,
 			#{p1} ,
 			#{p2} 
@@ -50,9 +52,9 @@
 
     <update id="update" >
     <![CDATA[
-        UPDATE menu_cook SET
+        UPDATE menu_Meal SET
 	        dish_sn = #{dishSn} ,
-	        cook_sn = #{cookSn} ,
+	        Meal_sn = #{mealSn} ,
 	        remark = #{remark} ,
 	        p1 = #{p1} ,
 	        p2 = #{p2} 
@@ -63,21 +65,21 @@
 
     <delete id="delete">
     <![CDATA[
-        DELETE FROM menu_cook WHERE
+        DELETE FROM menu_Meal WHERE
         sn = #{sn} 
     ]]>
     </delete>
     
-    <select id="getById" resultMap="RM.MenuCook">
-	    SELECT <include refid="MenuCook.columns"/>
+    <select id="getById" resultMap="RM.MenuMeal">
+	    SELECT <include refid="MenuMeal.columns"/>
 	    <![CDATA[
-	        FROM menu_cook 
+	        FROM menu_Meal 
 	        WHERE 
 		        sn = #{sn} 
 	    ]]>
     </select>
 
-	<sql id="MenuCook.findPage.where">
+	<sql id="MenuMeal.findPage.where">
 	    <trim prefix="WHERE" prefixOverrides="AND|OR" >
 		       <if test="sn !=null">
 		            AND sn = #{sn}
@@ -85,8 +87,8 @@
 		       <if test="dishSn !=null">
 		            AND dish_sn = #{dishSn}
 		       </if>
-		       <if test="cookSn !=null">
-		            AND cook_sn = #{cookSn}
+		       <if test="MealSn !=null">
+		            AND Meal_sn = #{mealSn}
 		       </if>
 		       <if test="remark !=null">
 		            AND remark = #{remark}
@@ -101,25 +103,23 @@
 	</sql>
 	 
     <select id="findPageCount" resultType="java.lang.Integer">
-        SELECT count(*) FROM menu_cook <include refid="MenuCook.findPage.where"/>    
+        SELECT count(*) FROM menu_Meal <include refid="MenuMeal.findPage.where"/>    
     </select>
     
-    <select id="findPage" resultMap="RM.MenuCook">
-    	SELECT <include refid="MenuCook.columns"/> FROM menu_cook 
-		<include refid="MenuCook.findPage.where"/>
+    <select id="findPage" resultMap="RM.MenuMeal">
+    	SELECT <include refid="MenuMeal.columns"/> FROM menu_Meal 
+		<include refid="MenuMeal.findPage.where"/>
 		<if test="sortColumns != null" >
 			order by #{sortColumns}
 		</if>
     </select>
     
-    <select id="query" resultMap="RM.MenuCook">
-    	SELECT <include refid="MenuCook.columns"/> FROM menu_cook 
-		<include refid="MenuCook.findPage.where"/>
+    <select id="query" resultMap="RM.MenuMeal">
+    	SELECT <include refid="MenuMeal.columns"/> FROM menu_Meal 
+		<include refid="MenuMeal.findPage.where"/>
 		<if test="sortColumns != null" >
 			order by #{sortColumns}
 		</if>
     </select>
-
-	
 </mapper>
 

@@ -116,6 +116,12 @@ public class CookAction extends BaseAction {
 			err.printStackTrace();
 			if( err instanceof DuplicateKeyException){
 				vo.setErrMsg("编码重复");
+				Map<String,String> sexMap = new HashMap<String,String>();
+				sexMap.put("1", "男");
+				sexMap.put("0", "女");
+				
+				request.setAttribute("sexMap", sexMap);
+				
 				return "dish/cookEidt";
 			}
 		}

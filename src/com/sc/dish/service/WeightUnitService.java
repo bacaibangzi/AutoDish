@@ -89,6 +89,13 @@ public class WeightUnitService extends BaseService<WeightUnit>{
 		conditionMap.put("platNo", platNo);
 		return weightUnitMapper.query(conditionMap);
 	}
+	
+
+	public List<WeightUnit> queryWeightUnitsByOrgCode(String orgCode)  throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("orgCode", orgCode);
+		return weightUnitMapper.query(conditionMap);
+	}
 
 	/**
 	 * 根据条件分页查询

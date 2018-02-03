@@ -11,6 +11,7 @@ import com.sc.dish.dao.MaterialMapper;
 import com.sc.dish.dao.MenuMaterialMapper;
 import com.sc.dish.pojo.Material;
 import com.sc.dish.pojo.MenuMaterial;
+import com.sc.dish.pojo.MenuNutrition;
 import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
@@ -98,8 +99,10 @@ public class MenuMaterialService extends BaseService<MenuMaterial>{
 	 */
 	public Page<MenuMaterial> queryMenuMaterialsForPage(ConditionVO vo,
 			Page<MenuMaterial> page)  throws Exception{
+		System.out.println("==================> id:"+vo.getEntityId());
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("orgCode", vo.getOrgCode());
+		conditionMap.put("dishSn", vo.getEntityId());
 		return super.queryForPage(menuMaterialMapper, conditionMap, page);
 	}
 

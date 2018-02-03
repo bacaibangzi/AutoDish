@@ -35,8 +35,11 @@ public class MenuNutrition extends CubeBaseEntity implements java.io.Serializabl
 	private java.lang.String dishSn;
 	private java.lang.String materialSn;
 	private java.lang.Integer num;
+	private String unit;
 	private java.lang.String p1;
 	private java.lang.String p2;
+	private java.lang.String nutritionName;
+	private java.lang.String nutritionNo;
 	///columns END
 
 	public MenuNutrition(){
@@ -48,12 +51,36 @@ public class MenuNutrition extends CubeBaseEntity implements java.io.Serializabl
 		this.sn = sn;
 	}
 
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
+	}
+
 	public void setSn(java.lang.String value)
     {
 		this.sn = value;
 		this.idStr = value;
 	}
-	
+
+	public java.lang.String getNutritionName() {
+		return nutritionName;
+	}
+
+	public void setNutritionName(java.lang.String nutritionName) {
+		this.nutritionName = nutritionName;
+	}
+
+	public java.lang.String getNutritionNo() {
+		return nutritionNo;
+	}
+
+	public void setNutritionNo(java.lang.String nutritionNo) {
+		this.nutritionNo = nutritionNo;
+	}
+
 	public java.lang.String getSn()
     {
 		return this.sn;

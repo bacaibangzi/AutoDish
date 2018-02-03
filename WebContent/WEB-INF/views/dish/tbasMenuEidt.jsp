@@ -51,6 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<form:input path="foodName"  cssClass="input-text {required: true, maxlength: 20}"/>
 						</td>
 					</tr>
+					<!--  
 					<tr>	
 						<td class="hd" >
 							所属餐台
@@ -58,11 +59,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</td>
 						<td >
 							<input type="text" class="filter-text" id="platName" name="platName" readonly="readonly" value="${form.platName}"/>
-							<!-- <button onclick="showOrgTree()">.</button> -->
 							<input type="button" onclick="showOrgTree()"  value="." />
 							<input type="hidden" id="platNo" name="platNo" value="${form.platNo}" />
 						</td>
 					</tr>
+					-->
 					<tr>	
 						<td class="hd" >
 							菜品类别
@@ -79,6 +80,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</td>
 						<td >
 							<form:select path="weightUnit" id="weightUnit"  items="${weightUnitMap}" cssClass="input-select {required: true}"/> 
+						</td>
+					</tr>
+					<tr>	
+						<td class="hd" >
+							厨师
+							<span class="field-tips">*</span>
+						</td>
+						<td >
+							<form:select path="cook" id="cook"  items="${cookMap}" cssClass="input-select {required: true}"/> 
+						</td>
+					</tr>
+					<tr>	
+						<td class="hd" >
+							餐盆
+							<span class="field-tips">*</span>
+						</td>
+						<td >
+							<form:select path="potNo" id="potNo"  items="${potMap}" cssClass="input-select {required: true}"/> 
 						</td>
 					</tr>
 					<tr>	

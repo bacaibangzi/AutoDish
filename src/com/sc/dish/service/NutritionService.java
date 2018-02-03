@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sc.dish.dao.NutritionMapper;
+import com.sc.dish.pojo.MenuMeal;
 import com.sc.dish.pojo.Nutrition;
 import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
@@ -97,6 +98,13 @@ public class NutritionService extends BaseService<Nutrition>{
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("platNo", platNo);
 		return NutritionMapper.query(conditionMap);
+	}
+
+
+	public List<Nutrition> queryByDishSn(String dishSn) throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("dishSn", dishSn);
+		return NutritionMapper.queryByDishSn(conditionMap);
 	}
 
 }

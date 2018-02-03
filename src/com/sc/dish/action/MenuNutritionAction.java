@@ -28,7 +28,8 @@ public class MenuNutritionAction extends BaseAction {
 	 * @return
 	 */
 	@RequestMapping(value = "/main.htm", method = RequestMethod.GET)
-	public String toMain() {
+	public String toMain(@ModelAttribute ConditionVO vo,HttpServletRequest request) {
+		request.setAttribute("vo", vo);
 		return "dish/menuNutritionMain";
 	}
 

@@ -128,7 +128,9 @@
 			order by #{sortColumns}
 		</if>
     </select>
-
-	
+    
+    <select id="queryByDishSn" resultMap="RM.Material">
+    	select t2.no  , t2.name   from menu_material t1 left join material t2  on t1.material_sn = t2.sn where t1.dish_sn = #{dishSn}
+    </select>
 </mapper>
 

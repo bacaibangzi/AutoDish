@@ -11,25 +11,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sc.dish.pojo.MenuCook;
-import com.sc.dish.service.MenuCookService;
+import com.sc.dish.pojo.MenuMeal;
+import com.sc.dish.service.MenuMealService;
 import com.sc.framework.base.action.BaseAction;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
 @Controller
-@RequestMapping("/menuCook")
-public class MenuCookAction extends BaseAction {
+@RequestMapping("/menuMeal")
+public class MenuMealAction extends BaseAction {
 	@Autowired
-	MenuCookService menuCookService;
+	MenuMealService menuMealService;
 
 	/**
 	 * 产品服务页面
 	 * @return
 	 */
 	@RequestMapping(value = "/main.htm", method = RequestMethod.GET)
-	public String toMain() {
-		return "dish/menuCookMain";
+	public String toMain(@ModelAttribute ConditionVO vo,HttpServletRequest request) {
+		request.setAttribute("vo", vo);
+		return "dish/menuMealMain";
 	}
 
 	/**
@@ -41,62 +42,62 @@ public class MenuCookAction extends BaseAction {
 	@RequestMapping(value = "/list.htm", method = RequestMethod.POST)
 	@ResponseBody
 	public void list(@ModelAttribute ConditionVO vo,
-			@ModelAttribute Page<MenuCook> page, HttpServletResponse response) throws Exception {
+			@ModelAttribute Page<MenuMeal> page, HttpServletResponse response) throws Exception {
 		super.setPageInfo(page);
-		Page<MenuCook> list = menuCookService.queryMenuCooksForPage(vo, page);
+		Page<MenuMeal> list = menuMealService.queryMenuMealsForPage(vo, page);
 		super.readerPage2Json(list, response);
 
 	}
 
 	/**
-	 * MenuCook编辑页面queryMenuCooksPublishForPage
+	 * MenuMeal编辑页面queryMenuMealsPublishForPage
 	 * @param vo
-	 * @param MenuCook
+	 * @param MenuMeal
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/eidt.htm", method = RequestMethod.GET)
-	public String eidt(@ModelAttribute ConditionVO vo,@ModelAttribute("form") MenuCook MenuCook,HttpServletRequest request) throws Exception{
+	public String eidt(@ModelAttribute ConditionVO vo,@ModelAttribute("form") MenuMeal MenuMeal,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		if(vo.getEntityId()!=null){
-			BeanUtils.copyProperties(menuCookService.getMenuCookById(vo),MenuCook);
+			BeanUtils.copyProperties(menuMealService.getMenuMealById(vo),MenuMeal);
 		} 
-		return "dish/menuCookEidt";
+		return "dish/menuMealEidt";
 	}
 	
 	/**
-	 * MenuCook详细信息页面
+	 * MenuMeal详细信息页面
 	 * @param vo
-	 * @param MenuCook
+	 * @param MenuMeal
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/detail.htm", method = RequestMethod.GET)
-	public String detail(@ModelAttribute ConditionVO vo,@ModelAttribute("form") MenuCook MenuCook,HttpServletRequest request) throws Exception{
+	public String detail(@ModelAttribute ConditionVO vo,@ModelAttribute("form") MenuMeal MenuMeal,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
-		BeanUtils.copyProperties(menuCookService.getMenuCookById(vo),MenuCook);
-		return "dish/menuCookDetail";
+		BeanUtils.copyProperties(menuMealService.getMenuMealById(vo),MenuMeal);
+		return "dish/menuMealDetail";
 	}
 	
 	/**
-	 * 保存MenuCook信息
+	 * 保存MenuMeal信息
 	 * @param vo
-	 * @param MenuCook
+	 * @param MenuMeal
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/save.htm", method = RequestMethod.POST)
 	@ResponseBody
-	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute MenuCook MenuCook,HttpServletRequest request) throws Exception{
+	public String save(@ModelAttribute ConditionVO vo,@ModelAttribute MenuMeal MenuMeal,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
 		
-		menuCookService.save(vo);
-		//return "dish/menuCookMain";
+		menuMealService.save(vo);
+		//return "dish/menuMealMain";
 		return "true";
 	}
 	
 	/**
-	 * 删除MenuCook信息
+	 * 删除MenuMeal信息
 	 * @param vo
 	 * @param request
 	 * @return
@@ -105,8 +106,8 @@ public class MenuCookAction extends BaseAction {
 	@ResponseBody
 	public String delete(@ModelAttribute ConditionVO vo,HttpServletRequest request) throws Exception{
 		request.setAttribute("vo", vo);
-		menuCookService.deleteMenuCookById(vo);
-		return "dish/menuCookMain";
+		menuMealService.deleteMenuMealById(vo);
+		return "dish/menuMealMain";
 	}
 
 }

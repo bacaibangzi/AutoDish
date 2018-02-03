@@ -21,9 +21,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sc.dish.pojo.FoodType;
+import com.sc.dish.pojo.TbasPlatinfo;
 import com.sc.dish.service.FoodTypeService;
+import com.sc.dish.service.TbasPlatinfoService;
 import com.sc.framework.base.action.BaseAction;
-import com.sc.framework.utils.StringUtil;
 import com.sc.framework.vo.ConditionVO;
 
 import net.sf.json.JSONObject;
@@ -33,6 +34,8 @@ import net.sf.json.JSONObject;
 public class FoodTypeRest extends BaseAction{
 	@Autowired
 	FoodTypeService foodTypeService;
+	@Autowired
+	TbasPlatinfoService tbasPlatinfoService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -83,6 +86,7 @@ public class FoodTypeRest extends BaseAction{
 		renderJson(map,response);
 	}
 	
+	// 获取菜品类型
 	@RequestMapping(value = "/get-rest", method = RequestMethod.GET)
 	//@ResponseBody
 	public void get(@RequestBody String content,
@@ -96,7 +100,13 @@ public class FoodTypeRest extends BaseAction{
 			if(platNo==null||"".equals(platNo)){
 				throw new Exception("餐台号不能为空");
 			}
-			list = foodTypeService.queryFoodTypesByCant(platNo);
+			// 根据餐台号查找org_code
+			TbasPlatinfo tbasPlatinfo = tbasPlatinfoService.getByNo(platNo);
+			if(tbasPlatinfo==null){
+				throw new Exception("餐台号不正确");
+			}
+			
+			list = foodTypeService.queryFoodTypesByOrgCode(tbasPlatinfo.getOrgCode());
 			map.put("success", "true"); 
 			map.put("list", list); 
 		} catch (Exception e) {

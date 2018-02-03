@@ -44,7 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<a hideFocus="true" href="javascript:chushi()" class="gray_radiu_btn" >
 							<em class="gray_l"></em> 
 							<em class="gray_r"></em> 
-							设置厨师
+							设置餐次
 						</a>
 				</div>
 				<div class="right_opts">
@@ -63,7 +63,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 						<th><input type="checkbox" /></th>
 						<th>序号</th>
-						<th>餐台名称</th>
 						<th>菜品编号</th>
 						<th>菜品名称</th>
 						<th>单价</th>
@@ -96,7 +95,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			tableObj.aoColumns=[
 				{"mDataProp":"","sDefaultContent":"<input type='checkbox' />","bSortable":false,"sWidth":"20px",sClass:"checkbox"},
 				{"mDataProp":"sn","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
-				{"mDataProp":"platName","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
 				{"mDataProp":"foodNo","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
 				{"mDataProp":"foodName","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
 				{"mDataProp":"priceUnit","sDefaultContent": "","bSortable":false,"sClass":"text-align-mid","sWidth":"100"},
@@ -194,7 +192,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			commonDialog.addBtn("ok",'确定', commonDialog.cancel);
 		}
 		
-		// 厨师
+		// 餐次
 		function chushi(){
 			var rows=getSeleteObjs(datatable);//alert(rows.length);
 			if(rows.length!=1){
@@ -202,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				return;
 			}
 			var selectId = rows[0]["idStr"];
-			var commonDialog = commonOpenDialog("yuanl",'厨师信息',800,500, '<%=basePath%>menuCook/main.htm?entityId=' + selectId);
+			var commonDialog = commonOpenDialog("yuanl",'餐次信息',800,500, '<%=basePath%>menuMeal/main.htm?entityId=' + selectId);
 			commonDialog.addBtn("ok",'确定', commonDialog.cancel);
 		}
 		

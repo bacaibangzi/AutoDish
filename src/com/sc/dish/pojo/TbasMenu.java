@@ -1,5 +1,8 @@
 package com.sc.dish.pojo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -59,9 +62,32 @@ public class TbasMenu extends CubeBaseEntity implements java.io.Serializable,Clo
 	private java.lang.String orgCode;
 	private java.lang.String p1;
 	private java.lang.String p2;
+	private String cook;
+	private String potNo;
+	
+	private List<MealTime> mealTime= new ArrayList<MealTime>();// 餐次
+	private List<Nutrition> nutrition= new ArrayList<Nutrition>(); //营养
+	private List<Material> material= new ArrayList<Material>(); // 原料
+	
 	///columns END
 
 	public TbasMenu(){
+	}
+
+	public String getCook() {
+		return cook;
+	}
+
+	public void setCook(String cook) {
+		this.cook = cook;
+	}
+
+	public String getPotNo() {
+		return potNo;
+	}
+
+	public void setPotNo(String potNo) {
+		this.potNo = potNo;
 	}
 
 	public TbasMenu(
@@ -233,7 +259,31 @@ public class TbasMenu extends CubeBaseEntity implements java.io.Serializable,Clo
 		return this.p2;
 	}
 
-    /**
+    public List<MealTime> getMealTime() {
+		return mealTime;
+	}
+
+	public void setMealTime(List<MealTime> mealTime) {
+		this.mealTime = mealTime;
+	}
+
+	public List<Nutrition> getNutrition() {
+		return nutrition;
+	}
+
+	public void setNutrition(List<Nutrition> nutrition) {
+		this.nutrition = nutrition;
+	}
+
+	public List<Material> getMaterial() {
+		return material;
+	}
+
+	public void setMaterial(List<Material> material) {
+		this.material = material;
+	}
+
+	/**
      * @brief   功能: 将TbasMenu对象数据进行串化
      * @param   
      * @return  

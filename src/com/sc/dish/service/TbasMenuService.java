@@ -80,6 +80,12 @@ public class TbasMenuService extends BaseService<TbasMenu>{
 		conditionMap.put("platNo", platNo);
 		return tbasMenuMapper.query(conditionMap);
 	}
+	
+	public List<TbasMenu> queryTbasMenusByOrgCode(String orgCode)  throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("orgCode", orgCode);
+		return tbasMenuMapper.query(conditionMap);
+	}
 
 	/**
 	 * 根据条件分页查询

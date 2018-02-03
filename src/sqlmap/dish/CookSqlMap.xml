@@ -15,11 +15,12 @@
         <result property="orgCode" column="org_code"/>
         <result property="p1" column="p1"/>
         <result property="p2" column="p2"/>
+        <result property="zjh" column="zjh"/>
     </resultMap>
 
 	<sql id="Cook.columns">
 	    <![CDATA[
-        sn ,name ,sex ,birthday ,phone ,remark ,org_code ,p1 ,p2 ,no
+        sn ,name ,sex ,birthday ,phone ,remark ,org_code ,p1 ,p2 ,no,zjh
 	    ]]>
 	</sql>
 	
@@ -34,7 +35,7 @@
         	remark ,
         	org_code ,
         	p1 ,
-        	p2 
+        	p2 ,zjh
         ) VALUES (
 			nextVal('cook') ,#{no} ,
 			#{name} ,
@@ -44,7 +45,8 @@
 			#{remark} ,
 			#{orgCode} ,
 			#{p1} ,
-			#{p2} 
+			#{p2} ,
+			#{zjh} 
         )
     ]]>
     <!--
@@ -69,7 +71,8 @@
 	        remark = #{remark} ,
 	        org_code = #{orgCode} ,
 	        p1 = #{p1} ,
-	        p2 = #{p2} 
+	        p2 = #{p2}  ,
+	        zjh = #{zjh} 
         WHERE 
 	        sn = #{sn} 
     ]]>

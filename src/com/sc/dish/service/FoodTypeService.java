@@ -98,4 +98,10 @@ public class FoodTypeService  extends BaseService<FoodType>{
 		conditionMap.put("platNo", platNo);
 		return foodTypeMapper.query(conditionMap);
 	}
+	
+	public List<FoodType> queryFoodTypesByOrgCode(String orgCode) throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("orgCode", orgCode);
+		return foodTypeMapper.query(conditionMap);
+	}
 }

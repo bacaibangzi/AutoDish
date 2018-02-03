@@ -98,5 +98,11 @@ public class CookService extends BaseService<Cook>{
 		conditionMap.put("platNo", platNo);
 		return cookMapper.query(conditionMap);
 	}
+	
+	public List<Cook> queryCooksByOrgCode(String orgCode) throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("orgCode", orgCode);
+		return cookMapper.query(conditionMap);
+	}
 
 }

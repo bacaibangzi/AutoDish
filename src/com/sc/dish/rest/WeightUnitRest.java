@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sc.dish.pojo.FoodType;
+import com.sc.dish.pojo.TbasPlatinfo;
 import com.sc.dish.pojo.WeightUnit;
+import com.sc.dish.service.TbasPlatinfoService;
 import com.sc.dish.service.WeightUnitService;
 import com.sc.framework.base.action.BaseAction;
 import com.sc.framework.utils.StringUtil;
@@ -35,6 +37,8 @@ import net.sf.json.JSONObject;
 public class WeightUnitRest extends BaseAction{
 	@Autowired
 	WeightUnitService weightUnitService;
+	@Autowired
+	TbasPlatinfoService tbasPlatinfoService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -84,6 +88,7 @@ public class WeightUnitRest extends BaseAction{
 		renderJson(map,response);
 	}
 	
+	// 菜品单位
 	@RequestMapping(value = "/get-rest", method = RequestMethod.GET)
 	//@ResponseBody
 	public void get(@RequestBody String content,
@@ -97,7 +102,12 @@ public class WeightUnitRest extends BaseAction{
 			if(platNo==null||"".equals(platNo)){
 				throw new Exception("餐台号不能为空");
 			}
-			list = weightUnitService.queryWeightUnitsByCant(platNo);
+			// 根据餐台号查找org_code
+			TbasPlatinfo tbasPlatinfo = tbasPlatinfoService.getByNo(platNo);
+			if(tbasPlatinfo==null){
+				throw new Exception("餐台号不正确");
+			}
+			list = weightUnitService.queryWeightUnitsByOrgCode(tbasPlatinfo.getOrgCode());
 			map.put("success", "true"); 
 			map.put("list", list); 
 		} catch (Exception e) {

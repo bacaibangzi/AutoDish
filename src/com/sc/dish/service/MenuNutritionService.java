@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.sc.dish.dao.MenuNutritionMapper;
 import com.sc.dish.dao.NutritionMapper;
 import com.sc.dish.pojo.MenuMaterial;
+import com.sc.dish.pojo.MenuMeal;
 import com.sc.dish.pojo.MenuNutrition;
 import com.sc.dish.pojo.Nutrition;
 import com.sc.framework.base.service.BaseService;
@@ -100,6 +101,7 @@ public class MenuNutritionService extends BaseService<MenuNutrition>{
 			Page<MenuNutrition> page)  throws Exception{
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("orgCode", vo.getOrgCode());
+		conditionMap.put("dishSn", vo.getEntityId());
 		return super.queryForPage(menuNutritionMapper, conditionMap, page);
 	}
 

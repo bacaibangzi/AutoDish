@@ -49,10 +49,11 @@
 			<mapper resource="sqlmap/dish/CookSqlMap.xml" />
 			<mapper resource="sqlmap/dish/MaterialSqlMap.xml" />
 			<mapper resource="sqlmap/dish/NutritionSqlMap.xml" />
-			<mapper resource="sqlmap/dish/MenuCookSqlMap.xml" />
+			<mapper resource="sqlmap/dish/MenuMealSqlMap.xml" />
 			<mapper resource="sqlmap/dish/MenuMaterialSqlMap.xml" />
 			<mapper resource="sqlmap/dish/MenuNutritionSqlMap.xml" />
 			<mapper resource="sqlmap/dish/Pot.xml" />
+			<mapper resource="sqlmap/dish/MealTimeSqlMap.xml" />
 			
 		</mappers>
 </configuration>

@@ -13,6 +13,8 @@
         <result property="orgCode" column="org_code"/>
         <result property="p1" column="p1"/>
         <result property="p2" column="p2"/>
+        <result property="num" column="num"/>
+        <result property="unit" column="unit"/>
     </resultMap>
 
 	<sql id="Nutrition.columns">
@@ -130,5 +132,9 @@
     </select>
 
 	
+
+	<select id="queryByDishSn" resultMap="RM.Nutrition">
+    	select t2.no  , t2.name ,t2.unit, t2.num  from menu_nutrition t1 left join nutrition t2  on t1.material_sn = t2.sn where t1.dish_sn = #{dishSn}
+    </select>	
 </mapper>
 

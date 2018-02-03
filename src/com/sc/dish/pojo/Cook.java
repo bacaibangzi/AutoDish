@@ -47,9 +47,18 @@ public class Cook extends CubeBaseEntity implements java.io.Serializable,Cloneab
 	private java.lang.String orgCode;
 	private java.lang.String p1;
 	private java.lang.String p2;
+	private String zjh;
 	///columns END
 
 	public Cook(){
+	}
+
+	public String getZjh() {
+		return zjh;
+	}
+
+	public void setZjh(String zjh) {
+		this.zjh = zjh;
 	}
 
 	public String getNo() {

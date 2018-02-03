@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2018-01-05 15:50:58
+Date: 2018-02-02 17:00:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,22 +20,25 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `cook`;
 CREATE TABLE `cook` (
-  `sn` varchar(64) NOT NULL,
+  `sn` varchar(64) DEFAULT NULL,
+  `no` varchar(64) NOT NULL,
   `name` varchar(64) DEFAULT NULL,
   `sex` varchar(1) DEFAULT NULL,
-  `birthday` datetime DEFAULT NULL ,
+  `birthday` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `phone` varchar(64) DEFAULT NULL,
   `remark` varchar(64) DEFAULT NULL,
-  `org_code` varchar(64) DEFAULT NULL,
+  `org_code` varchar(64) NOT NULL,
   `p1` varchar(64) DEFAULT NULL,
   `p2` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`sn`)
+  PRIMARY KEY (`no`,`org_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cook
 -- ----------------------------
-INSERT INTO `cook` VALUES ('2', '大厨师', '1', '2017-12-28 00:00:00', '13333333', '1', '0000', null, null);
+INSERT INTO `cook` VALUES ('2', '01', '川菜厨师', '1', '2018-01-22 00:00:00', '13333333', '1', '0000', null, null);
+INSERT INTO `cook` VALUES ('4', '01', '川菜厨师', '0', '2018-03-01 00:00:00', '', '', '000000010001', null, null);
+INSERT INTO `cook` VALUES ('3', '02', '北京厨师', '0', '2018-01-10 00:00:00', '', '', '0000', null, null);
 
 -- ----------------------------
 -- Table structure for dev_org_info
@@ -433,37 +436,43 @@ INSERT INTO `dev_role_menu` VALUES ('5767', '15', '17', null);
 INSERT INTO `dev_role_menu` VALUES ('5768', '15', '126', null);
 INSERT INTO `dev_role_menu` VALUES ('5769', '15', '1160', null);
 INSERT INTO `dev_role_menu` VALUES ('5770', '15', '1161', null);
-INSERT INTO `dev_role_menu` VALUES ('5965', '3', '0', null);
-INSERT INTO `dev_role_menu` VALUES ('5966', '3', '1', null);
-INSERT INTO `dev_role_menu` VALUES ('5967', '3', '16', null);
-INSERT INTO `dev_role_menu` VALUES ('5968', '3', '17', null);
-INSERT INTO `dev_role_menu` VALUES ('5969', '3', '126', null);
-INSERT INTO `dev_role_menu` VALUES ('5970', '3', '1237', null);
-INSERT INTO `dev_role_menu` VALUES ('5971', '3', '1240', null);
-INSERT INTO `dev_role_menu` VALUES ('5972', '3', '1241', null);
-INSERT INTO `dev_role_menu` VALUES ('5973', '2', '0', null);
-INSERT INTO `dev_role_menu` VALUES ('5974', '2', '1', null);
-INSERT INTO `dev_role_menu` VALUES ('5975', '2', '16', null);
-INSERT INTO `dev_role_menu` VALUES ('5976', '2', '17', null);
-INSERT INTO `dev_role_menu` VALUES ('5977', '2', '1243', null);
-INSERT INTO `dev_role_menu` VALUES ('5978', '2', '1244', null);
-INSERT INTO `dev_role_menu` VALUES ('5979', '2', '1246', null);
-INSERT INTO `dev_role_menu` VALUES ('5980', '2', '1247', null);
-INSERT INTO `dev_role_menu` VALUES ('5981', '2', '1245', null);
-INSERT INTO `dev_role_menu` VALUES ('5982', '2', '126', null);
-INSERT INTO `dev_role_menu` VALUES ('5983', '2', '1237', null);
-INSERT INTO `dev_role_menu` VALUES ('5984', '2', '1240', null);
-INSERT INTO `dev_role_menu` VALUES ('5985', '2', '1241', null);
-INSERT INTO `dev_role_menu` VALUES ('5986', '2', '1248', null);
-INSERT INTO `dev_role_menu` VALUES ('5987', '2', '1249', null);
-INSERT INTO `dev_role_menu` VALUES ('5988', '2', '1250', null);
-INSERT INTO `dev_role_menu` VALUES ('5989', '2', '11', null);
-INSERT INTO `dev_role_menu` VALUES ('5990', '2', '20', null);
-INSERT INTO `dev_role_menu` VALUES ('5991', '2', '22', null);
-INSERT INTO `dev_role_menu` VALUES ('5992', '2', '1239', null);
-INSERT INTO `dev_role_menu` VALUES ('5993', '2', '23', null);
-INSERT INTO `dev_role_menu` VALUES ('5994', '2', '24', null);
-INSERT INTO `dev_role_menu` VALUES ('5995', '2', '27', null);
+INSERT INTO `dev_role_menu` VALUES ('6072', '2', '0', null);
+INSERT INTO `dev_role_menu` VALUES ('6073', '2', '1', null);
+INSERT INTO `dev_role_menu` VALUES ('6074', '2', '16', null);
+INSERT INTO `dev_role_menu` VALUES ('6075', '2', '17', null);
+INSERT INTO `dev_role_menu` VALUES ('6076', '2', '1243', null);
+INSERT INTO `dev_role_menu` VALUES ('6077', '2', '1244', null);
+INSERT INTO `dev_role_menu` VALUES ('6078', '2', '1246', null);
+INSERT INTO `dev_role_menu` VALUES ('6079', '2', '1247', null);
+INSERT INTO `dev_role_menu` VALUES ('6080', '2', '1245', null);
+INSERT INTO `dev_role_menu` VALUES ('6081', '2', '126', null);
+INSERT INTO `dev_role_menu` VALUES ('6082', '2', '1237', null);
+INSERT INTO `dev_role_menu` VALUES ('6083', '2', '1240', null);
+INSERT INTO `dev_role_menu` VALUES ('6084', '2', '1241', null);
+INSERT INTO `dev_role_menu` VALUES ('6085', '2', '1248', null);
+INSERT INTO `dev_role_menu` VALUES ('6086', '2', '1249', null);
+INSERT INTO `dev_role_menu` VALUES ('6087', '2', '1250', null);
+INSERT INTO `dev_role_menu` VALUES ('6088', '2', '1252', null);
+INSERT INTO `dev_role_menu` VALUES ('6089', '2', '1253', null);
+INSERT INTO `dev_role_menu` VALUES ('6090', '2', '11', null);
+INSERT INTO `dev_role_menu` VALUES ('6091', '2', '20', null);
+INSERT INTO `dev_role_menu` VALUES ('6092', '2', '22', null);
+INSERT INTO `dev_role_menu` VALUES ('6093', '2', '23', null);
+INSERT INTO `dev_role_menu` VALUES ('6094', '2', '24', null);
+INSERT INTO `dev_role_menu` VALUES ('6095', '2', '27', null);
+INSERT INTO `dev_role_menu` VALUES ('6096', '3', '0', null);
+INSERT INTO `dev_role_menu` VALUES ('6097', '3', '1', null);
+INSERT INTO `dev_role_menu` VALUES ('6098', '3', '16', null);
+INSERT INTO `dev_role_menu` VALUES ('6099', '3', '17', null);
+INSERT INTO `dev_role_menu` VALUES ('6100', '3', '126', null);
+INSERT INTO `dev_role_menu` VALUES ('6101', '3', '1237', null);
+INSERT INTO `dev_role_menu` VALUES ('6102', '3', '1240', null);
+INSERT INTO `dev_role_menu` VALUES ('6103', '3', '1241', null);
+INSERT INTO `dev_role_menu` VALUES ('6104', '3', '1248', null);
+INSERT INTO `dev_role_menu` VALUES ('6105', '3', '1249', null);
+INSERT INTO `dev_role_menu` VALUES ('6106', '3', '1250', null);
+INSERT INTO `dev_role_menu` VALUES ('6107', '3', '1252', null);
+INSERT INTO `dev_role_menu` VALUES ('6108', '3', '1253', null);
 
 -- ----------------------------
 -- Table structure for dev_seq
@@ -485,31 +494,34 @@ INSERT INTO `dev_seq` VALUES ('app_run', '8', '1');
 INSERT INTO `dev_seq` VALUES ('area', '3209', '1');
 INSERT INTO `dev_seq` VALUES ('car_info', '15', '1');
 INSERT INTO `dev_seq` VALUES ('company_info', '316', '1');
-INSERT INTO `dev_seq` VALUES ('cook', '2', '1');
+INSERT INTO `dev_seq` VALUES ('cook', '4', '1');
 INSERT INTO `dev_seq` VALUES ('customer', '5', '1');
-INSERT INTO `dev_seq` VALUES ('food_type', '6', '1');
+INSERT INTO `dev_seq` VALUES ('food_type', '10', '1');
 INSERT INTO `dev_seq` VALUES ('house_info', '28', '1');
 INSERT INTO `dev_seq` VALUES ('house_type', '2', '1');
 INSERT INTO `dev_seq` VALUES ('lou_ceng', '2', '1');
 INSERT INTO `dev_seq` VALUES ('lou_dong', '2', '1');
-INSERT INTO `dev_seq` VALUES ('material', '1', '1');
-INSERT INTO `dev_seq` VALUES ('menu', '1250', '1');
+INSERT INTO `dev_seq` VALUES ('material', '6', '1');
+INSERT INTO `dev_seq` VALUES ('meal_time', '5', '1');
+INSERT INTO `dev_seq` VALUES ('menu', '1253', '1');
 INSERT INTO `dev_seq` VALUES ('menu_cook', '3', '1');
-INSERT INTO `dev_seq` VALUES ('menu_material', '3', '1');
-INSERT INTO `dev_seq` VALUES ('menu_nutrition', '3', '1');
+INSERT INTO `dev_seq` VALUES ('menu_material', '7', '1');
+INSERT INTO `dev_seq` VALUES ('menu_meal', '9', '1');
+INSERT INTO `dev_seq` VALUES ('menu_nutrition', '9', '1');
 INSERT INTO `dev_seq` VALUES ('news', '14', '1');
-INSERT INTO `dev_seq` VALUES ('nutrition', '2', '1');
+INSERT INTO `dev_seq` VALUES ('nutrition', '5', '1');
 INSERT INTO `dev_seq` VALUES ('org', '262', '1');
+INSERT INTO `dev_seq` VALUES ('pot', '5', '1');
 INSERT INTO `dev_seq` VALUES ('role', '20', '1');
-INSERT INTO `dev_seq` VALUES ('role_menu', '5995', '1');
+INSERT INTO `dev_seq` VALUES ('role_menu', '6108', '1');
 INSERT INTO `dev_seq` VALUES ('room', '2', '1');
-INSERT INTO `dev_seq` VALUES ('t_bas_menu', '6', '1');
+INSERT INTO `dev_seq` VALUES ('t_bas_menu', '8', '1');
 INSERT INTO `dev_seq` VALUES ('t_bas_platinfo', '5', '1');
 INSERT INTO `dev_seq` VALUES ('user', '148', '1');
 INSERT INTO `dev_seq` VALUES ('user_house', '54', '1');
 INSERT INTO `dev_seq` VALUES ('user_orgs', '1185', '1');
 INSERT INTO `dev_seq` VALUES ('user_role', '327', '1');
-INSERT INTO `dev_seq` VALUES ('weight_unit', '3', '1');
+INSERT INTO `dev_seq` VALUES ('weight_unit', '8', '1');
 
 -- ----------------------------
 -- Table structure for dev_system_menu
@@ -559,17 +571,18 @@ INSERT INTO `dev_system_menu` VALUES ('1230', '10', '收银汇总', 'ReportSuper
 INSERT INTO `dev_system_menu` VALUES ('1231', '10', '销售汇总', 'ReportSupermarket/sxshz.htm', '', '', '227', '2');
 INSERT INTO `dev_system_menu` VALUES ('1233', '1172', '客户管理', 'scCustomer/main.htm', 'common/images/huiylx.png	', '', '8', '2');
 INSERT INTO `dev_system_menu` VALUES ('1237', '126', '菜品类型', 'foodType/main.htm', 'common/images/shanghxxgl.png', '1', '1', '2');
-INSERT INTO `dev_system_menu` VALUES ('1239', '11', '项目审核管理', 'publish/main.htm', 'common/images/vipfwgnfp.png', '', '16', '2');
 INSERT INTO `dev_system_menu` VALUES ('1240', '126', '菜品单位', 'weightUnit/main.htm', 'common/images/xitjsgl.png', '', '2', '2');
 INSERT INTO `dev_system_menu` VALUES ('1241', '126', '菜品信息', 'tbasMenu/main.htm', 'common/images/xitcd.png', '', '3', '2');
 INSERT INTO `dev_system_menu` VALUES ('1243', '0', '食堂管理', '', 'common/images/shanghvipfwsq.png', '', '2', '1');
 INSERT INTO `dev_system_menu` VALUES ('1244', '1243', '食堂信息', 'org/main.htm', 'common/images/xityggl.png', '', '1', '2');
 INSERT INTO `dev_system_menu` VALUES ('1245', '1243', '餐台信息', 'tbasPlatinfo/main.htm', 'common/images/shanghvipfwsq.png', '', '4', '2');
-INSERT INTO `dev_system_menu` VALUES ('1246', '1243', '摊位信息', 'agOrg/main.htm', 'common/images/xitcd.png', '', '2', '2');
-INSERT INTO `dev_system_menu` VALUES ('1247', '1243', '商户信息', 'businessUser/center.htm', 'common/images/shanghxxgl.png', '', '3', '2');
+INSERT INTO `dev_system_menu` VALUES ('1246', '1243', '商户管理', 'agOrg/main.htm', 'common/images/xitcd.png', '', '2', '2');
+INSERT INTO `dev_system_menu` VALUES ('1247', '1243', '商户用户', 'businessUser/center.htm', 'common/images/shanghxxgl.png', '', '3', '2');
 INSERT INTO `dev_system_menu` VALUES ('1248', '126', '原料管理', 'material/main.htm', 'common/images/shanghxxgl.png', '', '4', '2');
 INSERT INTO `dev_system_menu` VALUES ('1249', '126', '营养项目', 'nutrition/main.htm', 'common/images/shanghxxgl.png', '', '5', '2');
 INSERT INTO `dev_system_menu` VALUES ('1250', '126', '厨师信息', 'cook/main.htm', 'common/images/shanghvipfwsq.png', '', '6', '2');
+INSERT INTO `dev_system_menu` VALUES ('1252', '126', '餐盘信息', 'pot/main.htm', 'common/images/xitcd.png', '', '21', '2');
+INSERT INTO `dev_system_menu` VALUES ('1253', '126', '餐次信息', 'mealTime/main.htm', 'common/images/shanghxxgl.png', '', '25', '2');
 
 -- ----------------------------
 -- Table structure for dev_user_info
@@ -598,7 +611,7 @@ CREATE TABLE `dev_user_info` (
   `UI_TELPHONE` varchar(64) DEFAULT NULL COMMENT '公司电话',
   `UI_VIP_LEVEL_ID` decimal(12,0) DEFAULT NULL COMMENT '用户VIP等级ID',
   `UI_VIP_LEVEL_NAME` varchar(64) DEFAULT NULL COMMENT '用户VIP等级名称',
-  `UI_VIP_LEVEL_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '用户VIP等级到期时间',
+  `UI_VIP_LEVEL_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '用户VIP等级到期时间',
   `UI_CT_LIMIT` decimal(12,0) DEFAULT NULL COMMENT '用户餐厅上限',
   `UI_TOTAL_SMS_COUNT` decimal(12,0) DEFAULT NULL COMMENT '短信总条数',
   `UI_BALANCE` decimal(12,2) DEFAULT NULL COMMENT '账号余额',
@@ -615,7 +628,7 @@ CREATE TABLE `dev_user_info` (
 -- ----------------------------
 INSERT INTO `dev_user_info` VALUES ('26', '1', 'admin', 'MTIzNDU2', 'admin', null, 'Li D', '1', 'upload/images/1468474325683.jpg', null, null, null, '31', '3101', '310102', '18994036828', 'qwe1144084387@qq.com', '德国汉诺22', '意大利', '1249972', null, null, '2017-12-17 12:22:50', null, null, null, null, '2015-02-28 13:22:06', '1', '2015-02-09 15:57:57', '0000');
 INSERT INTO `dev_user_info` VALUES ('147', '2', 't1', 'MTIzNDU2', 'test', null, null, '0', null, null, null, null, null, null, null, '13376011121', '1213123123@qq.com', '1', '1', '1', null, null, '2017-12-20 16:33:13', null, null, null, null, '2017-09-19 15:52:47', '1', '2017-09-19 15:52:47', '000000030001');
-INSERT INTO `dev_user_info` VALUES ('148', '2', 't2', 'MTIzNDU2', '测试2', null, null, '1', null, null, null, null, null, null, null, '', '', null, null, null, null, null, '2017-12-20 16:35:19', null, null, null, null, '2017-12-20 16:28:19', '1', '2017-12-20 16:28:19', '000000020001');
+INSERT INTO `dev_user_info` VALUES ('148', '2', 't2', 'MTIzNDU2', '测试2', null, null, '1', null, null, null, null, null, null, null, '', '', null, null, null, null, null, '2018-02-02 16:11:35', null, null, null, null, '2017-12-20 16:28:19', '1', '2017-12-20 16:28:19', '000000010001');
 
 -- ----------------------------
 -- Table structure for dev_user_orgs
@@ -867,7 +880,7 @@ CREATE TABLE `dev_user_role` (
   `UR_ID` decimal(12,0) NOT NULL COMMENT '用户角色ID',
   `UI_ID` decimal(12,0) DEFAULT NULL COMMENT '用户ID',
   `RI_ID` decimal(12,0) DEFAULT NULL COMMENT '角色ID',
-  `UR_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP  COMMENT '到期时间',
+  `UR_TIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '到期时间',
   PRIMARY KEY (`UR_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色表';
 
@@ -986,19 +999,23 @@ CREATE TABLE `food_type` (
   `SN` varchar(50) NOT NULL,
   `TYPE_ID` varchar(50) NOT NULL,
   `TYPE_NAME` varchar(50) DEFAULT NULL,
-  `PLAT_NO` varchar(50) NOT NULL COMMENT '餐台编号',
+  `PLAT_NO` varchar(50) DEFAULT NULL COMMENT '餐台编号',
   `ORG_CODE` varchar(64) NOT NULL,
   `P1` varchar(64) DEFAULT NULL,
   `P2` varchar(64) DEFAULT NULL,
   `PLAT_Name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`TYPE_ID`,`ORG_CODE`,`PLAT_NO`)
+  PRIMARY KEY (`TYPE_ID`,`ORG_CODE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of food_type
 -- ----------------------------
-INSERT INTO `food_type` VALUES ('6', '01', '11', '1', '00000001', null, null, '糖水鸡餐台1');
+INSERT INTO `food_type` VALUES ('7', '01', '凉菜', null, '0000', null, null, null);
+INSERT INTO `food_type` VALUES ('9', '01', '热菜', null, '000000010001', null, null, null);
 INSERT INTO `food_type` VALUES ('3', '01', '凉菜', '3', '000000020001', null, null, '糖水鸡餐台');
+INSERT INTO `food_type` VALUES ('8', '02', '热菜', null, '0000', null, null, null);
+INSERT INTO `food_type` VALUES ('6', '02', '11', null, '00000001', null, null, null);
+INSERT INTO `food_type` VALUES ('10', '02', '凉菜', null, '000000010001', null, null, null);
 INSERT INTO `food_type` VALUES ('2', '02', '江浙菜', '3', '000000020001', null, null, '糖水鸡餐台');
 
 -- ----------------------------
@@ -1007,19 +1024,48 @@ INSERT INTO `food_type` VALUES ('2', '02', '江浙菜', '3', '000000020001', nul
 DROP TABLE IF EXISTS `material`;
 CREATE TABLE `material` (
   `sn` varchar(64) NOT NULL,
-  `name` varchar(64) DEFAULT NULL,
+  `no` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `remark` varchar(64) DEFAULT NULL,
-  `org_code` varchar(64) DEFAULT NULL,
+  `org_code` varchar(64) NOT NULL,
   `p1` varchar(64) DEFAULT NULL,
   `p2` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`sn`)
+  PRIMARY KEY (`no`,`org_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of material
 -- ----------------------------
-INSERT INTO `material` VALUES ('0', '白菜', '1.10', '11', '0000', null, null);
+INSERT INTO `material` VALUES ('0', '01', '白菜', '1.10', '11', '0000', null, null);
+INSERT INTO `material` VALUES ('5', '01', '白菜', '0.00', '', '000000010001', null, null);
+INSERT INTO `material` VALUES ('2', '02', '辣椒', '0.00', '111', '0000', null, null);
+INSERT INTO `material` VALUES ('6', '02', '辣椒', '0.00', '', '000000010001', null, null);
+INSERT INTO `material` VALUES ('3', '03', '油', '0.00', '12312', '0000', null, null);
+INSERT INTO `material` VALUES ('4', '22', '盐', '0.00', '22', '0000', null, null);
+
+-- ----------------------------
+-- Table structure for meal_time
+-- ----------------------------
+DROP TABLE IF EXISTS `meal_time`;
+CREATE TABLE `meal_time` (
+  `sn` varchar(64) NOT NULL,
+  `no` varchar(64) NOT NULL,
+  `name` varchar(64) DEFAULT NULL,
+  `date1` varchar(64) DEFAULT NULL,
+  `date2` varchar(64) DEFAULT NULL,
+  `date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `org_code` varchar(64) NOT NULL,
+  PRIMARY KEY (`no`,`org_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of meal_time
+-- ----------------------------
+INSERT INTO `meal_time` VALUES ('2', '01', '餐次1', '2018-01-23 16:32:12', '2018-01-31 16:32:15', null, '0000');
+INSERT INTO `meal_time` VALUES ('4', '01', '餐次1', '2018-02-02 16:13:56', '2018-02-02 16:13:59', null, '000000010001');
+INSERT INTO `meal_time` VALUES ('3', '02', '餐次2', '2018-01-23 16:32:22', '2018-01-30 16:32:24', null, '0000');
+INSERT INTO `meal_time` VALUES ('5', '02', '餐次2', '2018-02-02 16:14:13', '2018-03-24 16:14:15', null, '000000010001');
 
 -- ----------------------------
 -- Table structure for menu_cook
@@ -1057,7 +1103,32 @@ CREATE TABLE `menu_material` (
 -- ----------------------------
 -- Records of menu_material
 -- ----------------------------
-INSERT INTO `menu_material` VALUES ('3', '', '0', null, '白菜', null);
+INSERT INTO `menu_material` VALUES ('5', '7', '5', null, '白菜', null);
+INSERT INTO `menu_material` VALUES ('6', '8', '5', null, '白菜', null);
+INSERT INTO `menu_material` VALUES ('7', '8', '6', null, '辣椒', null);
+
+-- ----------------------------
+-- Table structure for menu_meal
+-- ----------------------------
+DROP TABLE IF EXISTS `menu_meal`;
+CREATE TABLE `menu_meal` (
+  `sn` varchar(64) NOT NULL COMMENT '菜品营养',
+  `dish_sn` varchar(64) DEFAULT NULL,
+  `meal_sn` varchar(64) DEFAULT NULL,
+  `remark` varchar(64) DEFAULT NULL,
+  `p1` varchar(64) DEFAULT NULL,
+  `p2` varchar(64) DEFAULT NULL COMMENT '菜品原料',
+  PRIMARY KEY (`sn`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of menu_meal
+-- ----------------------------
+INSERT INTO `menu_meal` VALUES ('5', '', '4', null, '餐次1', null);
+INSERT INTO `menu_meal` VALUES ('6', '', '5', null, '餐次2', null);
+INSERT INTO `menu_meal` VALUES ('7', '7', '4', null, '餐次1', null);
+INSERT INTO `menu_meal` VALUES ('8', '8', '4', null, '餐次1', null);
+INSERT INTO `menu_meal` VALUES ('9', '8', '5', null, '餐次2', null);
 
 -- ----------------------------
 -- Table structure for menu_nutrition
@@ -1076,7 +1147,11 @@ CREATE TABLE `menu_nutrition` (
 -- ----------------------------
 -- Records of menu_nutrition
 -- ----------------------------
-INSERT INTO `menu_nutrition` VALUES ('3', '', '2', null, 'Ca', null);
+INSERT INTO `menu_nutrition` VALUES ('5', '', '4', null, 'Ca', null);
+INSERT INTO `menu_nutrition` VALUES ('6', '', '5', null, 'Na', null);
+INSERT INTO `menu_nutrition` VALUES ('7', '7', '4', null, 'Ca', null);
+INSERT INTO `menu_nutrition` VALUES ('8', '8', '4', null, 'Ca', null);
+INSERT INTO `menu_nutrition` VALUES ('9', '8', '5', null, 'Na', null);
 
 -- ----------------------------
 -- Table structure for nutrition
@@ -1084,19 +1159,46 @@ INSERT INTO `menu_nutrition` VALUES ('3', '', '2', null, 'Ca', null);
 DROP TABLE IF EXISTS `nutrition`;
 CREATE TABLE `nutrition` (
   `sn` varchar(64) NOT NULL COMMENT '营养',
+  `no` varchar(64) NOT NULL,
   `name` varchar(64) DEFAULT NULL,
   `value` varchar(64) DEFAULT NULL,
   `remark` varchar(64) DEFAULT NULL,
-  `org_code` varchar(64) DEFAULT NULL,
+  `org_code` varchar(64) NOT NULL,
   `p1` varchar(64) DEFAULT NULL,
   `p2` varchar(64) DEFAULT NULL,
-  PRIMARY KEY (`sn`)
+  PRIMARY KEY (`no`,`org_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of nutrition
 -- ----------------------------
-INSERT INTO `nutrition` VALUES ('2', 'Ca', 'ml', 'Ca', '0000', null, null);
+INSERT INTO `nutrition` VALUES ('2', '01', 'Ca', 'ml', 'Ca', '0000', null, null);
+INSERT INTO `nutrition` VALUES ('4', '01', 'Ca', 'L', '', '000000010001', null, null);
+INSERT INTO `nutrition` VALUES ('3', '02', 'Na', 'ML', '1', '0000', null, null);
+INSERT INTO `nutrition` VALUES ('5', '02', 'Na', 'L', '', '000000010001', null, null);
+
+-- ----------------------------
+-- Table structure for pot
+-- ----------------------------
+DROP TABLE IF EXISTS `pot`;
+CREATE TABLE `pot` (
+  `sn` varchar(64) NOT NULL,
+  `no` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `remark` varchar(64) DEFAULT NULL,
+  `org_code` varchar(64) NOT NULL,
+  `p1` varchar(64) DEFAULT NULL,
+  `p2` varchar(64) DEFAULT NULL,
+  PRIMARY KEY (`no`,`org_code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of pot
+-- ----------------------------
+INSERT INTO `pot` VALUES ('2', '01', '餐盘1', '', '0000', null, null);
+INSERT INTO `pot` VALUES ('4', '01', '餐盘1', '', '000000010001', null, null);
+INSERT INTO `pot` VALUES ('3', '02', '餐盘2', '', '0000', null, null);
+INSERT INTO `pot` VALUES ('5', '02', '餐盘2', '', '000000010001', null, null);
 
 -- ----------------------------
 -- Table structure for t_bas_menu
@@ -1104,7 +1206,7 @@ INSERT INTO `nutrition` VALUES ('2', 'Ca', 'ml', 'Ca', '0000', null, null);
 DROP TABLE IF EXISTS `t_bas_menu`;
 CREATE TABLE `t_bas_menu` (
   `SN` varchar(50) DEFAULT NULL,
-  `PLAT_NO` varchar(50) NOT NULL COMMENT '餐台编号',
+  `PLAT_NO` varchar(50) DEFAULT NULL COMMENT '餐台编号',
   `FOOD_NO` varchar(50) NOT NULL COMMENT '菜编号',
   `FOOD_NAME` varchar(255) DEFAULT NULL COMMENT '菜名称',
   `FOOD_TYPE` varchar(50) DEFAULT NULL COMMENT '所属分类',
@@ -1119,14 +1221,17 @@ CREATE TABLE `t_bas_menu` (
   `P1` varchar(64) DEFAULT NULL,
   `P2` varchar(64) DEFAULT NULL,
   `PLAT_Name` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`PLAT_NO`,`ORG_CODE`,`FOOD_NO`)
+  `COOK` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`ORG_CODE`,`FOOD_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_bas_menu
 -- ----------------------------
-INSERT INTO `t_bas_menu` VALUES ('5', '3', '01', '111', '01', '01', '1.00', '1.000', '0', '2018-01-31 00:00:00', '', null, '000000020001', null, null, '糖水鸡餐台');
-INSERT INTO `t_bas_menu` VALUES ('6', '3', '02', '11', '01', '01', '11.00', '11.000', '0', '2018-01-26 00:00:00', '', null, '000000020001', null, null, '糖水鸡餐台');
+INSERT INTO `t_bas_menu` VALUES ('7', null, '01', '麻婆豆腐', '01', '01', '10.00', '1.000', '0', '2018-02-02 00:00:00', '', null, '000000010001', null, null, null, '01');
+INSERT INTO `t_bas_menu` VALUES ('8', null, '02', '泡椒鱼', '01', '01', '20.00', '1.000', '0', '2018-02-02 00:00:00', '', null, '000000010001', null, null, null, '01');
+INSERT INTO `t_bas_menu` VALUES ('5', null, '01', '孟婆的汤', '02', '09', '1.00', '1.000', '0', '2018-01-31 00:00:00', '', null, '000000020001', null, null, null, '01');
+INSERT INTO `t_bas_menu` VALUES ('6', null, '02', '麻婆豆腐', '01', '01', '11.00', '11.000', '0', '2018-01-26 00:00:00', '', null, '000000020001', null, null, null, '01');
 
 -- ----------------------------
 -- Table structure for t_bas_platinfo
@@ -1151,7 +1256,7 @@ CREATE TABLE `t_bas_platinfo` (
 -- ----------------------------
 -- Records of t_bas_platinfo
 -- ----------------------------
-INSERT INTO `t_bas_platinfo` VALUES ('4', '1', '糖水鸡餐台1', '3', '13333333', '5', '', '', null, '00000001', '', '');
+INSERT INTO `t_bas_platinfo` VALUES ('4', '000001', '糖水鸡餐台1', '3', '13333333', '5', '', '', null, '000000010001', '', '');
 INSERT INTO `t_bas_platinfo` VALUES ('2', '1', '绿闷鸭餐台', '张思', '18111111111', '中间', '', '', null, '000000030001', '', '');
 INSERT INTO `t_bas_platinfo` VALUES ('5', '11', '1', '1', '133333331', '1', '', '', null, '00000001', '', '');
 INSERT INTO `t_bas_platinfo` VALUES ('3', '3', '糖水鸡餐台', '李刘', '12122222', '大门口', '', '', null, '000000020001', '', '');
@@ -1176,8 +1281,11 @@ CREATE TABLE `weight_unit` (
 -- ----------------------------
 -- Records of weight_unit
 -- ----------------------------
-INSERT INTO `weight_unit` VALUES ('3', '01', '顿', '1', null, '00000001', null, null, '糖水鸡餐台1');
+INSERT INTO `weight_unit` VALUES ('3', '01', '顿', null, null, '00000001', null, null, null);
+INSERT INTO `weight_unit` VALUES ('8', '01', '公斤', null, null, '000000010001', null, null, null);
 INSERT INTO `weight_unit` VALUES ('2', '01', '斤', '3', null, '000000020001', null, null, '糖水鸡套餐');
+INSERT INTO `weight_unit` VALUES ('7', '08', '22', null, null, '0000', null, null, null);
+INSERT INTO `weight_unit` VALUES ('6', '09', '9999', null, null, '0000', null, null, null);
 
 -- ----------------------------
 -- Function structure for currval

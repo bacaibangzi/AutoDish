@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.sc.dish.pojo.FoodType;
 import com.sc.dish.pojo.TbasMenu;
+import com.sc.dish.pojo.TbasPlatinfo;
+import com.sc.dish.service.MaterialService;
+import com.sc.dish.service.MealTimeService;
+import com.sc.dish.service.NutritionService;
 import com.sc.dish.service.TbasMenuService;
+import com.sc.dish.service.TbasPlatinfoService;
 import com.sc.framework.base.action.BaseAction;
-import com.sc.framework.utils.StringUtil;
 import com.sc.framework.vo.ConditionVO;
 
 import net.sf.json.JSONObject;
@@ -34,6 +37,14 @@ import net.sf.json.JSONObject;
 public class TbasMenuRest extends BaseAction{
 	@Autowired
 	TbasMenuService tbasMenuService;
+	@Autowired
+	TbasPlatinfoService tbasPlatinfoService;
+	@Autowired
+	MaterialService materialService;
+	@Autowired
+	MealTimeService mealTimeService;
+	@Autowired
+	NutritionService nutritionService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -97,7 +108,21 @@ public class TbasMenuRest extends BaseAction{
 			if(platNo==null||"".equals(platNo)){
 				throw new Exception("餐台号不能为空");
 			}
-			list = tbasMenuService.queryTbasMenusByCant(platNo);
+			// 根据餐台号查找org_code
+			TbasPlatinfo tbasPlatinfo = tbasPlatinfoService.getByNo(platNo);
+			if(tbasPlatinfo==null){
+				throw new Exception("餐台号不正确");
+			}
+			
+			list = tbasMenuService.queryTbasMenusByOrgCode(tbasPlatinfo.getOrgCode());
+			
+			// 
+			for(TbasMenu tbasMenu : list){
+				tbasMenu.setMaterial(materialService.queryByDishSn(tbasMenu.getSn()));
+				tbasMenu.setMealTime(mealTimeService.queryByDishSn(tbasMenu.getSn()));
+				tbasMenu.setNutrition(nutritionService.queryByDishSn(tbasMenu.getSn()));
+			}
+			
 			map.put("success", "true"); 
 			map.put("list", list); 
 		} catch (Exception e) {

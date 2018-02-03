@@ -37,11 +37,33 @@ public class MenuMaterial extends CubeBaseEntity implements java.io.Serializable
 	private java.lang.Integer num;
 	private java.lang.String p1;
 	private java.lang.String p2;
+	private java.lang.String materialName;
+	private String materialNo;
 	///columns END
 
 	public MenuMaterial(){
 	}
  
+
+	public java.lang.String getMaterialName() {
+		return materialName;
+	}
+
+
+	public void setMaterialName(java.lang.String materialName) {
+		this.materialName = materialName;
+	}
+
+
+	public String getMaterialNo() {
+		return materialNo;
+	}
+
+
+	public void setMaterialNo(String materialNo) {
+		this.materialNo = materialNo;
+	}
+
 
 	public void setSn(java.lang.String value)
     {

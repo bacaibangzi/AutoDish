@@ -50,6 +50,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<form:input path="unitName"  cssClass="input-text {required: true, maxlength: 20}"/>
 						</td>
 					</tr>
+					<tr>	
+						<td class="hd" >
+							转换系数
+							<span class="field-tips">*</span>
+						</td>
+						<td >
+							<form:input path="unitZhxs"  cssClass="input-text {required: true, maxlength: 20}"/>
+						</td>
+					</tr>
 					<!--  
 					<tr>	
 						<td class="hd" >

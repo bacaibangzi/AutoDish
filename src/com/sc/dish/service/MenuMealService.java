@@ -7,21 +7,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sc.dish.dao.CookMapper;
-import com.sc.dish.dao.MenuCookMapper;
-import com.sc.dish.pojo.Cook;
-import com.sc.dish.pojo.MenuCook;
-import com.sc.dish.pojo.MenuNutrition;
+import com.sc.dish.dao.MealTimeMapper;
+import com.sc.dish.dao.MenuMealMapper;
+import com.sc.dish.pojo.MealTime;
+import com.sc.dish.pojo.MenuMaterial;
+import com.sc.dish.pojo.MenuMeal;
 import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
 
 @Service
-public class MenuCookService extends BaseService<MenuCook>{
+public class MenuMealService extends BaseService<MenuMeal>{
 	@Autowired
-	MenuCookMapper menuCookMapper;
+	MenuMealMapper menuMealMapper;
 	@Autowired
-	CookMapper cookMapper;
+	MealTimeMapper mealTimeMapper;
 
 	/**
 	 * 删除APP
@@ -29,12 +29,12 @@ public class MenuCookService extends BaseService<MenuCook>{
 	 * @param vo
 	 * @return
 	 */
-	public boolean deleteMenuCookById(ConditionVO vo)  throws Exception{
+	public boolean deleteMenuMealById(ConditionVO vo)  throws Exception{
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		try {
 			for (String id : vo.getEntityIds().split(",")) {
 				conditionMap.put("sn", id);
-				menuCookMapper.delete(conditionMap);
+				menuMealMapper.delete(conditionMap);
 			}
 		} catch (Exception err) {
 			err.printStackTrace();
@@ -46,14 +46,14 @@ public class MenuCookService extends BaseService<MenuCook>{
 
 	public void save(ConditionVO vo)throws Exception{
 		for (String id : vo.getEntityIds().split(",")) {
-			Cook cook = cookMapper.getById(Long.parseLong(id));
+			MealTime Meal = mealTimeMapper.getById(Long.parseLong(id));
 			
-			MenuCook menuCook = new MenuCook();
-			menuCook.setDishSn(vo.getEntityId());
-			menuCook.setCookSn(id);
-			menuCook.setP1(cook.getName());
+			MenuMeal menuMeal = new MenuMeal();
+			menuMeal.setDishSn(vo.getEntityId());
+			menuMeal.setMealSn(id);
+			menuMeal.setP1(Meal.getName());
 			
-			menuCookMapper.insert(menuCook);
+			menuMealMapper.insert(menuMeal);
 		}
 	}
 	
@@ -63,8 +63,8 @@ public class MenuCookService extends BaseService<MenuCook>{
 	 * @param vo
 	 * @return
 	 */
-	public MenuCook getMenuCookById(ConditionVO vo) throws Exception {
-		return menuCookMapper.getById(Long.parseLong(vo.getEntityId()));
+	public MenuMeal getMenuMealById(ConditionVO vo) throws Exception {
+		return menuMealMapper.getById(Long.parseLong(vo.getEntityId()));
 	}
 
 	/**
@@ -72,11 +72,11 @@ public class MenuCookService extends BaseService<MenuCook>{
 	 * 
 	 * @param entity
 	 */
-	public void saveOrUpdateMenuCookInfo(MenuCook entity) throws Exception {
+	public void saveOrUpdateMenuMealInfo(MenuMeal entity) throws Exception {
 		if (entity.getSn() == null || "".equals(entity.getSn())) {  
-			menuCookMapper.insert(entity);
+			menuMealMapper.insert(entity);
 		} else {
-			menuCookMapper.update(entity);
+			menuMealMapper.update(entity);
 		}
 	}
 
@@ -86,9 +86,9 @@ public class MenuCookService extends BaseService<MenuCook>{
 	 * @param vo
 	 * @return
 	 */
-	public List<MenuCook> queryMenuCooksByCondition(ConditionVO vo)  throws Exception{
+	public List<MenuMeal> queryMenuMealsByCondition(ConditionVO vo)  throws Exception{
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		return menuCookMapper.findPage(conditionMap);
+		return menuMealMapper.findPage(conditionMap);
 	}
 
 	/**
@@ -98,11 +98,12 @@ public class MenuCookService extends BaseService<MenuCook>{
 	 * @param page
 	 * @return
 	 */
-	public Page<MenuCook> queryMenuCooksForPage(ConditionVO vo,
-			Page<MenuCook> page)  throws Exception{
+	public Page<MenuMeal> queryMenuMealsForPage(ConditionVO vo,
+			Page<MenuMeal> page)  throws Exception{
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("orgCode", vo.getOrgCode());
-		return super.queryForPage(menuCookMapper, conditionMap, page);
+		conditionMap.put("dishSn", vo.getEntityId());
+		return super.queryForPage(menuMealMapper, conditionMap, page);
 	}
 
 	/**
@@ -112,10 +113,10 @@ public class MenuCookService extends BaseService<MenuCook>{
 	 * @return
 	 * @throws Exception
 	 */
-	public List<MenuCook> queryMenuCooksByCant(String platNo) throws Exception{
+	public List<MenuMeal> queryMenuMealsByCant(String platNo) throws Exception{
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("platNo", platNo);
-		return menuCookMapper.query(conditionMap);
+		return menuMealMapper.query(conditionMap);
 	}
-
+	
 }

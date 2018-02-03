@@ -9,13 +9,16 @@
         <result property="dishSn" column="dish_sn"/>
         <result property="materialSn" column="material_sn"/>
         <result property="num" column="num"/>
+        <result property="unit" column="unit"/>
         <result property="p1" column="p1"/>
         <result property="p2" column="p2"/>
+        <result property="nutritionName" column="nutrition_Name"/>
+        <result property="nutritionNo" column="nutrition_No"/>
     </resultMap>
 
 	<sql id="MenuNutrition.columns">
 	    <![CDATA[
-        sn ,dish_sn ,material_sn ,num ,p1 ,p2 
+        sn ,dish_sn ,material_sn ,num ,p1 ,p2 ,unit
 	    ]]>
 	</sql>
 	
@@ -25,14 +28,14 @@
         	sn ,
         	dish_sn ,
         	material_sn ,
-        	num ,
+        	num ,unit,
         	p1 ,
         	p2 
         ) VALUES (
 			nextVal('menu_nutrition') ,
 			#{dishSn} ,
 			#{materialSn} ,
-			#{num} ,
+			#{num} ,#{unit} ,
 			#{p1} ,
 			#{p2} 
         )
@@ -54,6 +57,7 @@
 	        dish_sn = #{dishSn} ,
 	        material_sn = #{materialSn} ,
 	        num = #{num} ,
+	        unit = #{unit} ,
 	        p1 = #{p1} ,
 	        p2 = #{p2} 
         WHERE 
@@ -119,7 +123,5 @@
 			order by #{sortColumns}
 		</if>
     </select>
-
-	
 </mapper>
 

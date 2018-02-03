@@ -14,7 +14,7 @@ import com.sc.framework.base.pojo.CubeBaseEntity;
  *
  * 类功能详细描述
  */
-public class MenuCook extends CubeBaseEntity implements java.io.Serializable,Cloneable
+public class MenuMeal extends CubeBaseEntity implements java.io.Serializable,Cloneable
 {
 	private static final long serialVersionUID = 5454155825314635342L;
 	
@@ -33,19 +33,29 @@ public class MenuCook extends CubeBaseEntity implements java.io.Serializable,Clo
 	///columns START
 	private java.lang.String sn;
 	private java.lang.String dishSn;
-	private java.lang.String cookSn;
+	private java.lang.String mealSn;
 	private java.lang.String remark;
 	private java.lang.String p1;
 	private java.lang.String p2;
+	private java.lang.String mealName;
+	private java.lang.String mealNo;
 	///columns END
 
-	public MenuCook(){
+	public MenuMeal(){
 	}
 
-	public MenuCook(
+	public MenuMeal(
 		java.lang.String sn
 	){
 		this.sn = sn;
+	}
+
+	public java.lang.String getMealNo() {
+		return mealNo;
+	}
+
+	public void setMealNo(java.lang.String mealNo) {
+		this.mealNo = mealNo;
 	}
 
 	public void setSn(java.lang.String value)
@@ -54,6 +64,14 @@ public class MenuCook extends CubeBaseEntity implements java.io.Serializable,Clo
 		this.idStr = value;
 	}
 	
+	public java.lang.String getMealName() {
+		return mealName;
+	}
+
+	public void setMealName(java.lang.String mealName) {
+		this.mealName = mealName;
+	}
+
 	public java.lang.String getSn()
     {
 		return this.sn;
@@ -67,15 +85,15 @@ public class MenuCook extends CubeBaseEntity implements java.io.Serializable,Clo
     {
 		return this.dishSn;
 	}
-	public void setCookSn(java.lang.String value)
-    {
-		this.cookSn = value;
+ 
+	public java.lang.String getMealSn() {
+		return mealSn;
 	}
-	
-	public java.lang.String getCookSn()
-    {
-		return this.cookSn;
+
+	public void setMealSn(java.lang.String mealSn) {
+		this.mealSn = mealSn;
 	}
+
 	public void setRemark(java.lang.String value)
     {
 		this.remark = value;
@@ -114,7 +132,6 @@ public class MenuCook extends CubeBaseEntity implements java.io.Serializable,Clo
 		return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
 			.append("Sn",getSn())
 			.append("DishSn",getDishSn())
-			.append("CookSn",getCookSn())
 			.append("Remark",getRemark())
 			.append("P1",getP1())
 			.append("P2",getP2())
@@ -139,9 +156,9 @@ public class MenuCook extends CubeBaseEntity implements java.io.Serializable,Clo
      * @return  
      */
 	public boolean equals(Object obj) {
-		if(obj instanceof MenuCook == false) return false;
+		if(obj instanceof MenuMeal == false) return false;
 		if(this == obj) return true;
-		MenuCook other = (MenuCook)obj;
+		MenuMeal other = (MenuMeal)obj;
 		return new EqualsBuilder()
 			.append(getSn(),other.getSn())
 			.isEquals();

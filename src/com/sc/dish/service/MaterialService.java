@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.sc.dish.dao.MaterialMapper;
 import com.sc.dish.pojo.Material;
+import com.sc.dish.pojo.MenuMaterial;
 import com.sc.framework.base.service.BaseService;
 import com.sc.framework.vo.ConditionVO;
 import com.sc.framework.vo.Page;
@@ -99,4 +100,10 @@ public class MaterialService extends BaseService<Material>{
 		return materialMapper.query(conditionMap);
 	}
 
+	
+	public List<Material> queryByDishSn(String dishSn) throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("dishSn", dishSn);
+		return materialMapper.queryByDishSn(conditionMap);
+	}
 }

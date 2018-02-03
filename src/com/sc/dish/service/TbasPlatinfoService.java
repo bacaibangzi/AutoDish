@@ -94,4 +94,11 @@ public class TbasPlatinfoService extends BaseService<TbasPlatinfo>{
 		conditionMap.put("platNo", platNo);
 		return tbasPlatinfoMapper.getByNoOrgCode(conditionMap);
 	}
+			
+	public TbasPlatinfo getByNo(String platNo)
+			throws Exception{
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		conditionMap.put("platNo", platNo);
+		return tbasPlatinfoMapper.getByNo(conditionMap);
+	}
 }

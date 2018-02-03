@@ -69,9 +69,8 @@
     <update id="update" >
     <![CDATA[
         UPDATE t_bas_platinfo SET
-	        SN = #{sn} ,
 	        PLAT_NAME = #{platName} ,
-	        PLAT_NO = PLAT_NO ,
+	        PLAT_NO = #{platNo} ,
 	        BOSSNAME = #{bossname} ,
 	        PHONE = #{phone} ,
 	        LOCATION = #{location} ,
@@ -102,6 +101,14 @@
 	    ]]>
     </select>
     
+    <select id="getByNo" resultMap="RM.TbasPlatinfo">
+	    SELECT <include refid="TbasPlatinfo.columns"/>
+	    <![CDATA[
+	        FROM t_bas_platinfo 
+	        WHERE 
+		    PLAT_NO = #{platNo} 
+	    ]]>
+    </select>
     
     
     <select id="getByNoOrgCode" resultMap="RM.TbasPlatinfo">

@@ -11,6 +11,8 @@
         <result property="num" column="num"/>
         <result property="p1" column="p1"/>
         <result property="p2" column="p2"/>
+        <result property="materialName" column="material_Name"/>
+        <result property="materialNo" column="material_no"/>
     </resultMap>
 
 	<sql id="MenuMaterial.columns">
@@ -117,7 +119,5 @@
 			order by #{sortColumns}
 		</if>
     </select>
-
-	
 </mapper>
 

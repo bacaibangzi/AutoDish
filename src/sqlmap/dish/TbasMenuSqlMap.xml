@@ -21,11 +21,13 @@
         <result property="orgCode" column="ORG_CODE"/>
         <result property="p1" column="P1"/>
         <result property="p2" column="P2"/>
+        <result property="cook" column="cook"/>
+        <result property="potNo" column="pot_No"/>
     </resultMap>
 
 	<sql id="TbasMenu.columns">
 	    <![CDATA[
-        SN ,PLAT_NO ,FOOD_NO ,FOOD_NAME ,FOOD_TYPE ,WEIGHT_UNIT ,PRICE_UNIT ,START_WEIGHT ,USE_FLAG ,START_DATE ,OPERATOR ,OPERATE_TIME ,ORG_CODE ,P1 ,P2 ,PLAT_Name
+        SN ,PLAT_NO ,FOOD_NO ,FOOD_NAME ,FOOD_TYPE ,WEIGHT_UNIT ,PRICE_UNIT ,START_WEIGHT ,USE_FLAG ,START_DATE ,OPERATOR ,OPERATE_TIME ,ORG_CODE ,P1 ,P2 ,PLAT_Name,cook,pot_No
 	    ]]>
 	</sql>
 	
@@ -47,7 +49,7 @@
         	OPERATE_TIME ,
         	ORG_CODE ,
         	P1 ,
-        	P2 
+        	P2 ,cook,pot_No
         ) VALUES (
 			nextVal('t_bas_menu') ,
 			#{platNo} ,
@@ -64,7 +66,9 @@
 			#{operateTime} ,
 			#{orgCode} ,
 			#{p1} ,
-			#{p2} 
+			#{p2}  ,
+			#{cook} ,
+			#{potNo} 
         )
     ]]>
     <!--
@@ -95,7 +99,9 @@
 	        OPERATE_TIME = #{operateTime} ,
 	        ORG_CODE = #{orgCode} ,
 	        P1 = #{p1} ,
-	        P2 = #{p2} 
+	        P2 = #{p2}  ,
+	        cook = #{cook} ,
+	        pot_No = #{potNo} 
         WHERE 
 	        SN = #{sn} 
     ]]>

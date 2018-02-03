@@ -22,10 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sc.dish.pojo.Cook;
 import com.sc.dish.pojo.FoodType;
+import com.sc.dish.pojo.Pot;
 import com.sc.dish.pojo.TbasMenu;
 import com.sc.dish.pojo.WeightUnit;
+import com.sc.dish.service.CookService;
 import com.sc.dish.service.FoodTypeService;
+import com.sc.dish.service.PotService;
 import com.sc.dish.service.TbasMenuService;
 import com.sc.dish.service.WeightUnitService;
 import com.sc.framework.base.action.BaseAction;
@@ -41,8 +45,10 @@ public class TbasMenuAction extends BaseAction {
 	WeightUnitService weightUnitService;
 	@Autowired
 	FoodTypeService foodTypeService;
-
-
+	@Autowired
+	CookService cookService;
+	@Autowired
+	PotService potService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -133,7 +139,7 @@ public class TbasMenuAction extends BaseAction {
 
 		if(vo.getEntityId()!=null){
 			TbasMenu tm = tbasMenuService.getTbasMenuById(vo);
-			
+			/*
 			Map<String,String> foodTypeMap = new HashMap<String,String>();
 			try {
 				List<FoodType> list = foodTypeService.queryFoodTypesByCant(tm.getPlatNo());
@@ -152,13 +158,41 @@ public class TbasMenuAction extends BaseAction {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-			}
+			}*/
 			
 			request.setAttribute("vo", vo);
 			BeanUtils.copyProperties(tm,TbasMenu);
-			request.setAttribute("foodTypeMap", foodTypeMap);
-			request.setAttribute("weightUnitMap", weightUnitMap);
 		} 
+		Map<String,String> foodTypeMap = new HashMap<String,String>();
+		Map<String,String> weightUnitMap = new HashMap<String,String>();
+		Map<String,String> cookMap = new HashMap<String,String>();
+		Map<String,String> potMap = new HashMap<String,String>();
+		
+		List<FoodType> foodTypeList = foodTypeService.queryFoodTypesByOrgCode(vo.getOrgCode());
+		for(FoodType foodType : foodTypeList){
+			foodTypeMap.put(foodType.getTypeId(), foodType.getTypeName());
+		} 
+		
+		List<WeightUnit> weightUnitList = weightUnitService.queryWeightUnitsByOrgCode(vo.getOrgCode());
+		for(WeightUnit weightUnit : weightUnitList){
+			weightUnitMap.put(weightUnit.getUnitId(), weightUnit.getUnitName());
+		}
+		
+		List<Cook> cookList = cookService.queryCooksByOrgCode(vo.getOrgCode());
+		for(Cook cook : cookList){
+			cookMap.put(cook.getNo(), cook.getName());
+		}
+		
+		List<Pot> potList = potService.queryPotsByOrgCode(vo.getOrgCode());
+		for(Pot pot : potList){
+			potMap.put(pot.getNo(), pot.getName());
+		}
+
+		request.setAttribute("foodTypeMap", foodTypeMap);
+		request.setAttribute("weightUnitMap", weightUnitMap);
+		request.setAttribute("cookMap", cookMap);
+		request.setAttribute("potMap", potMap);
+		
 		request.setAttribute("useFlagMap", useFlagMap);
 		
 		return "dish/tbasMenuEidt";
